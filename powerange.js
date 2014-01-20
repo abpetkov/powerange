@@ -1,3 +1,4 @@
+
 /**
  * Powerange 0.0.1
  * http://abpetkov.github.io/powerange/
@@ -43,7 +44,7 @@ function Powerange(element, options) {
   this.options = options || {};
 
   for (var i in defaults) {
-    if (this.options[i] == null) {
+    if (this.options[i] === null) {
       this.options[i] = defaults[i];
     }
   }
