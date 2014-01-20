@@ -1,0 +1,21 @@
+{
+    "name": "powerange"
+  , "version": "0.0.1"
+  , "description": "Module to create iOS 7 like range sliders"
+  , "main": "powerange.js"
+  , "repository": {
+        "type": "git"
+      , "url": "git://github.com/abpetkov/powerange.git"
+    }
+  , "author": "Alexander Petkov <abpetkov@gmail.com> (https://github.com/abpetkov)"
+  , "license": "MIT"
+  , "bugs": {
+      "url": "https://github.com/abpetkov/powerange/issues"
+    }
+  , "devDependencies": {
+        "uglify-js": "~2.4.8"
+      , "component": "~0.18.0"
+      , "uglifycss": "0.0.7"
+    }
+  , "homepage": "https://abpetkov.github.io/powerange"
+}
