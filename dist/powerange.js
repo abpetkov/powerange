@@ -1,3 +1,4 @@
+;(function(){
 
 /**
  * Require the given path.
@@ -264,4 +265,10 @@ Powerange.prototype.init = function() {
   console.log(this.options);
 };
 });
-require.alias("powerange/powerange.js", "powerange/index.js");
+require.alias("powerange/powerange.js", "powerange/index.js");if (typeof exports == "object") {
+  module.exports = require("powerange");
+} else if (typeof define == "function" && define.amd) {
+  define(function(){ return require("powerange"); });
+} else {
+  this["Powerange"] = require("powerange");
+}})();
