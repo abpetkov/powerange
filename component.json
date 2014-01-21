@@ -3,9 +3,11 @@
   , "repo": "abpetkov/powerange"
   , "description": "Module to create iOS 7 like range sliders"
   , "version": "0.0.1"
-  , "keywords": []
-  , "dependencies": {}
-  , "development": {}
+  , "keywords": [
+        "range"
+      , "slider"
+      , "iOS7"
+    ]
   , "license": "MIT"
   , "main": "powerange.js"
   , "scripts": [

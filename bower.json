@@ -1,0 +1,23 @@
+{
+    "name": "powerange"
+  , "main": "dist/powerange.js"
+  , "version": "0.0.1"
+  , "description": "Module to create iOS 7 like range sliders"
+  , "keywords": [
+        "range"
+      , "slider"
+      , "iOS7"
+    ]
+  , "authors": [
+      "Alexander Petkov <abpetkov@gmail.com> (https://github.com/abpetkov)"
+    ]
+  , "homepage": "https://abpetkov.github.io/powerange"
+  , "license": "MIT"
+  , "ignore": [
+        "**/.*"
+      , "build"
+      , "components"
+      , "node_modules"
+      , "bower_components"
+    ]
+}
