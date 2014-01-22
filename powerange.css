@@ -14,6 +14,14 @@
   width: 100%;
 }
 
+.range-quantity {
+  background-color: #017afd;
+  border-radius: 15px;
+  display: block;
+  height: 100%;
+  width: 0;
+}
+
 .range-handle {
   background-color: #fff;
   border-radius: 100%;
@@ -22,4 +30,21 @@
   top: -13px;
   position: absolute;
   width: 30px;
+}
+
+.range-min,
+.range-max {
+  font-size: 12px;
+  position: absolute;
+  text-align: center;
+  top: -4px;
+  width: 25px;
+}
+
+.range-min {
+  left: -30px;
+}
+
+.range-max {
+  right: -30px;
 }

@@ -87,15 +87,21 @@ Powerange.prototype.create = function(type) {
   this.min = document.createElement('span');
   this.max = document.createElement('span');
   this.handle = document.createElement('span');
-
-  this.slider.appendChild(this.min);
-  this.slider.appendChild(this.max);
-  this.slider.appendChild(this.handle);
+  this.quantity = document.createElement('span');
 
   this.slider.className = 'range-bar';
   this.min.className = 'range-min';
   this.max.className = 'range-max';
   this.handle.className = 'range-handle';
+  this.quantity.className = 'range-quantity';
+
+  this.min.innerHTML = '0';
+  this.max.innerHTML = '100';
+
+  this.slider.appendChild(this.min);
+  this.slider.appendChild(this.max);
+  this.slider.appendChild(this.handle);
+  this.slider.appendChild(this.quantity);
 
   return this.slider;
 };

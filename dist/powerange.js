@@ -228,7 +228,8 @@ module.exports = Powerange;
  */
 
 var defaults = {
-  color: '#64bd63'
+  color: '#a9acb1',
+  type: 'single'
 };
 
 /**
@@ -253,16 +254,76 @@ function Powerange(element, options) {
   }
 
   this.init();
-}
+};
+
+/**
+ * Hide the target element.
+ *
+ * @api private
+ */
+
+Powerange.prototype.hide = function() {
+  this.element.style.display = 'none';
+};
+
+/**
+ * Append the target after the element.
+ *
+ * @api private
+ */
+
+Powerange.prototype.append = function() {
+  var slider = this.create('single');
+  this.insertAfter(this.element, slider);
+};
+
+/**
+ * Create the appropriate type of slider.
+ *
+ * @param {String} type
+ * @returns {Object} this.slider
+ * @api private
+ */
+
+Powerange.prototype.create = function(type) {
+  this.slider = document.createElement('span');
+  this.min = document.createElement('span');
+  this.max = document.createElement('span');
+  this.handle = document.createElement('span');
+
+  this.slider.appendChild(this.min);
+  this.slider.appendChild(this.max);
+  this.slider.appendChild(this.handle);
+
+  this.slider.className = 'range-bar';
+  this.min.className = 'range-min';
+  this.max.className = 'range-max';
+  this.handle.className = 'range-handle';
+
+  return this.slider;
+};
+
+/**
+ * Insert element after another element.
+ *
+ * @param {Object} reference
+ * @param {Object} target
+ * @api private
+ */
+
+Powerange.prototype.insertAfter = function(reference, target) {
+  reference.parentNode.insertBefore(target, reference.nextSibling);
+};
 
 /*
- * Initialize
+ * Initialize.
  *
  * @api private
  */
 
 Powerange.prototype.init = function() {
-  console.log(this.options);
+  this.hide();
+  this.append();
 };
 });
 require.alias("powerange/powerange.js", "powerange/index.js");if (typeof exports == "object") {
