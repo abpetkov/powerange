@@ -84,24 +84,35 @@ Powerange.prototype.append = function() {
 
 Powerange.prototype.create = function(type) {
   this.slider = document.createElement('span');
-  this.min = document.createElement('span');
-  this.max = document.createElement('span');
-  this.handle = document.createElement('span');
-  this.quantity = document.createElement('span');
-
   this.slider.className = 'range-bar';
-  this.min.className = 'range-min';
-  this.max.className = 'range-max';
-  this.handle.className = 'range-handle';
-  this.quantity.className = 'range-quantity';
 
-  this.min.innerHTML = '0';
-  this.max.innerHTML = '100';
+  var elems = {
+      'handle': {
+          'type': 'span'
+        , 'selector': 'range-handle'
+      }
+    , 'min': {
+          'type': 'span'
+        , 'selector': 'range-min'
+      }
+    , 'max': {
+          'type': 'span'
+        , 'selector': 'range-max'
+      }
+    , 'quantity': {
+          'type': 'span'
+        , 'selector': 'range-quantity'
+      }
+  };
 
-  this.slider.appendChild(this.min);
-  this.slider.appendChild(this.max);
-  this.slider.appendChild(this.handle);
-  this.slider.appendChild(this.quantity);
+  for (var key in elems) {
+    if (elems.hasOwnProperty(key)) {
+      var temp = document.createElement(elems[key].type);
+
+      temp.className = elems[key].selector;
+      this.slider.appendChild(temp);
+    }
+  }
 
   return this.slider;
 };
