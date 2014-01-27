@@ -26,6 +26,9 @@ module.exports = Powerange;
 
 var defaults = {
   color: '#a9acb1',
+  min: 0,
+  max: 100,
+  start: 0,
   type: 'single'
 };
 
@@ -45,7 +48,7 @@ function Powerange(element, options) {
   this.options = options || {};
 
   for (var i in defaults) {
-    if (this.options[i] === null) {
+    if (this.options[i] == null) {
       this.options[i] = defaults[i];
     }
   }
@@ -119,6 +122,7 @@ Powerange.prototype.generate = function(type) {
  *
  * @param {String} type
  * @param {String} name
+ * @returns {Object} elem
  * @api private
  */
 
@@ -127,6 +131,21 @@ Powerange.prototype.create = function(type, name) {
   elem.className = name;
 
   return elem;
+};
+
+/*
+ * Set min and max values.
+ *
+ * @param {Number} min
+ * @param {Number} max
+ * @api private
+ */
+
+Powerange.prototype.setRange = function(min, max) {
+  if (typeof min === 'number' && typeof max === 'number') {
+    this.slider.querySelector('.range-min').innerHTML = min;
+    this.slider.querySelector('.range-max').innerHTML = max;
+  }
 };
 
 /**
@@ -150,4 +169,5 @@ Powerange.prototype.insertAfter = function(reference, target) {
 Powerange.prototype.init = function() {
   this.hide();
   this.append();
+  this.setRange(this.options.min, this.options.max);
 };
