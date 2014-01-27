@@ -70,21 +70,20 @@ Powerange.prototype.hide = function() {
  */
 
 Powerange.prototype.append = function() {
-  var slider = this.create('single');
+  var slider = this.generate('single');
   this.insertAfter(this.element, slider);
 };
 
 /**
- * Create the appropriate type of slider.
+ * Generate the appropriate type of slider.
  *
  * @param {String} type
  * @returns {Object} this.slider
  * @api private
  */
 
-Powerange.prototype.create = function(type) {
-  this.slider = document.createElement('span');
-  this.slider.className = 'range-bar';
+Powerange.prototype.generate = function(type) {
+  this.slider = this.create('span', 'range-bar');
 
   var elems = {
       'handle': {
@@ -107,14 +106,27 @@ Powerange.prototype.create = function(type) {
 
   for (var key in elems) {
     if (elems.hasOwnProperty(key)) {
-      var temp = document.createElement(elems[key].type);
-
-      temp.className = elems[key].selector;
+      var temp = this.create(elems[key].type, elems[key].selector);
       this.slider.appendChild(temp);
     }
   }
 
   return this.slider;
+};
+
+/*
+ * Create HTML element.
+ *
+ * @param {String} type
+ * @param {String} name
+ * @api private
+ */
+
+Powerange.prototype.create = function(type, name) {
+  var elem = document.createElement(type);
+  elem.className = name;
+
+  return elem;
 };
 
 /**
