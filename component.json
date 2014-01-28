@@ -16,4 +16,9 @@
   , "styles": [
       "powerange.css"
     ]
+  , "dependencies": {
+        "ui-component/mouse": "0.0.1"
+      , "component/events": "1.0.5"
+      , "component/translate": "*"
+    }
 }

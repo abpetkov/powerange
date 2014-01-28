@@ -13,6 +13,13 @@
  */
 
 /**
+ * External dependencies.
+ *
+ */
+
+var mouse = require('mouse');
+
+/**
  * Expose `Powerange`.
  */
 
@@ -54,6 +61,18 @@ function Powerange(element, options) {
   }
 
   this.init();
+};
+
+/**
+ * Bind handle element events.
+ *
+ * @api private
+ */
+
+Powerange.prototype.bindEvents = function () {
+  this.handle = this.slider.querySelector('.range-handle');
+  this.mouse = mouse(this.handle, this);
+  this.mouse.bind();
 };
 
 /**
@@ -117,7 +136,7 @@ Powerange.prototype.generate = function(type) {
   return this.slider;
 };
 
-/*
+/**
  * Create HTML element.
  *
  * @param {String} type
@@ -133,7 +152,7 @@ Powerange.prototype.create = function(type, name) {
   return elem;
 };
 
-/*
+/**
  * Set min and max values.
  *
  * @param {Number} min
@@ -160,7 +179,40 @@ Powerange.prototype.insertAfter = function(reference, target) {
   reference.parentNode.insertBefore(target, reference.nextSibling);
 };
 
-/*
+/**
+ * On mouse down.
+ *
+ * @param {Object} e
+ * @api private
+ */
+
+Powerange.prototype.onmousedown = function(e) {
+  this.startX = e.clientX;
+  this.handleOffsetX = this.handle.offsetLeft;
+  this.restrictHandle = this.slider.offsetWidth;
+};
+
+/**
+ * On mouse move.
+ *
+ * @api private
+ */
+
+Powerange.prototype.onmousemove = function(e) {
+  this.handle.style.left = (this.handleOffsetX + e.clientX - this.startX) + 'px';
+};
+
+/**
+ * On mouse up.
+ *
+ * @api private
+ */
+
+Powerange.prototype.onmouseup = function(e) {
+
+};
+
+/**
  * Initialize.
  *
  * @api private
@@ -169,5 +221,6 @@ Powerange.prototype.insertAfter = function(reference, target) {
 Powerange.prototype.init = function() {
   this.hide();
   this.append();
+  this.bindEvents();
   this.setRange(this.options.min, this.options.max);
 };

@@ -26,7 +26,9 @@
   background-color: #fff;
   border-radius: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  cursor: move;
   height: 30px;
+  left: 0;
   top: -13px;
   position: absolute;
   width: 30px;
