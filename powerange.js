@@ -168,7 +168,7 @@ Powerange.prototype.setRange = function(min, max) {
 };
 
 /**
- * Set current value.
+ * Set current position.
  *
  * @param {Number} val
  * @api private
@@ -177,6 +177,21 @@ Powerange.prototype.setRange = function(min, max) {
 Powerange.prototype.setPosition = function(val) {
   this.handle.style.left = val + 'px';
   this.slider.querySelector('.range-quantity').style.width = val + 'px';
+};
+
+/**
+ * Set current value.
+ *
+ * @api private
+ */
+
+Powerange.prototype.setValue = function () {
+  var handleLeft = parseFloat(this.handle.style.left)
+    , sliderWidth = this.slider.offsetWidth - this.handle.offsetWidth
+    , flag = handleLeft / sliderWidth
+    , result = flag * this.options.max;
+
+  this.element.value = Math.round(result);
 };
 
 /**
@@ -221,6 +236,8 @@ Powerange.prototype.onmousemove = function(e) {
   } else {
     this.setPosition(leftOffset);
   }
+
+  this.setValue();
 };
 
 /**
@@ -235,4 +252,5 @@ Powerange.prototype.init = function() {
   this.bindEvents();
   this.setRange(this.options.min, this.options.max);
   this.setPosition((this.slider.offsetWidth - this.handle.offsetWidth) / ((this.options.max - this.options.min) / this.options.start));
+  this.setValue();
 };
