@@ -64,7 +64,7 @@ function Powerange(element, options) {
 };
 
 /**
- * Bind handle element events.
+ * Bind events on handle element.
  *
  * @api private
  */
@@ -189,27 +189,26 @@ Powerange.prototype.insertAfter = function(reference, target) {
 Powerange.prototype.onmousedown = function(e) {
   this.startX = e.clientX;
   this.handleOffsetX = this.handle.offsetLeft;
-  this.restrictHandle = this.slider.offsetWidth;
+  this.restrictHandle = this.slider.offsetWidth - this.handle.offsetWidth;
 };
 
 /**
  * On mouse move.
  *
+ * @param {Object} e
  * @api private
  */
 
 Powerange.prototype.onmousemove = function(e) {
-  this.handle.style.left = (this.handleOffsetX + e.clientX - this.startX) + 'px';
-};
+  var leftOffset = this.handleOffsetX + e.clientX - this.startX;
 
-/**
- * On mouse up.
- *
- * @api private
- */
-
-Powerange.prototype.onmouseup = function(e) {
-
+  if (leftOffset <= 0) {
+    this.handle.style.left = 0;
+  } else if (leftOffset >= this.restrictHandle) {
+    this.handle.style.left = this.restrictHandle + 'px';
+  } else {
+    this.handle.style.left = leftOffset + 'px';
+  }
 };
 
 /**
