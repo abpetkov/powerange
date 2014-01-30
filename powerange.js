@@ -35,8 +35,7 @@ var defaults = {
   color: '#a9acb1',
   min: 0,
   max: 100,
-  start: 0,
-  type: 'single'
+  start: 0
 };
 
 /**
@@ -53,6 +52,7 @@ function Powerange(element, options) {
 
   this.element = element;
   this.options = options || {};
+  this.slider = this.create('span', 'range-bar');
 
   for (var i in defaults) {
     if (this.options[i] == null) {
@@ -60,7 +60,8 @@ function Powerange(element, options) {
     }
   }
 
-  this.init();
+  if (typeof this.options.start !== 'number') this.options.start = defaults.start;
+  if (this.element !== null && this.element.type === 'text') this.init();
 }
 
 /**
@@ -92,7 +93,7 @@ Powerange.prototype.hide = function() {
  */
 
 Powerange.prototype.append = function() {
-  var slider = this.generate('single');
+  var slider = this.generate();
   this.insertAfter(this.element, slider);
 };
 
@@ -105,8 +106,6 @@ Powerange.prototype.append = function() {
  */
 
 Powerange.prototype.generate = function(type) {
-  this.slider = this.create('span', 'range-bar');
-
   var elems = {
       'handle': {
           'type': 'span'
