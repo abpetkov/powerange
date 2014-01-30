@@ -32,10 +32,11 @@ module.exports = Powerange;
  */
 
 var defaults = {
-  color: '#a9acb1',
-  min: 0,
-  max: 100,
-  start: 0
+    color: '#a9acb1'
+  , decimal: false
+  , min: 0
+  , max: 100
+  , start: 0
 };
 
 /**
@@ -190,7 +191,9 @@ Powerange.prototype.setValue = function () {
     , flag = handleLeft / sliderWidth
     , result = flag * this.options.max;
 
-  this.element.value = Math.round(result);
+  result = (this.options.decimal) ? (Math.round(result * 10) / 10) : Math.round(result);
+
+  this.element.value = result;
 };
 
 /**
@@ -246,7 +249,7 @@ Powerange.prototype.onmousemove = function(e) {
  */
 
 Powerange.prototype.init = function() {
-  this.hide();
+  // this.hide();
   this.append();
   this.bindEvents();
   this.setRange(this.options.min, this.options.max);
