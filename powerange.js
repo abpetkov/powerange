@@ -208,7 +208,7 @@ Powerange.prototype.setValue = function () {
   var handleLeft = parseFloat(this.handle.style.left)
     , sliderWidth = this.slider.offsetWidth - this.handle.offsetWidth
     , flag = handleLeft / sliderWidth
-    , result = flag * this.options.max;
+    , result = flag * (this.options.max - this.options.min) + this.options.min;
 
   result = (this.options.decimal) ? (Math.round(result * 10) / 10) : Math.round(result);
 
