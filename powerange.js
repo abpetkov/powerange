@@ -62,6 +62,8 @@ function Powerange(element, options) {
   }
 
   if (typeof this.options.start !== 'number') this.options.start = defaults.start;
+  if (typeof this.options.decimal !== 'boolean') this.options.decimal = defaults.decimal;
+
   if (this.element !== null && this.element.type === 'text') this.init();
 }
 
