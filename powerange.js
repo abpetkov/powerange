@@ -168,6 +168,25 @@ Powerange.prototype.setRange = function(min, max) {
 };
 
 /**
+ * Set starting position.
+ *
+ * @param {Number} start
+ * @api private
+ */
+
+Powerange.prototype.setStart = function(start) {
+  if (start < this.options.min) start = this.options.min;
+  if (start > this.options.max) start = this.options.max;
+
+  var value = start - this.options.min
+    , interval = this.options.max - this.options.min
+    , flag = value / interval
+    , result = flag * 100;
+
+  this.setPosition((result / 100) * (this.slider.offsetWidth - this.handle.offsetWidth));
+};
+
+/**
  * Set current position.
  *
  * @param {Number} val
@@ -249,10 +268,10 @@ Powerange.prototype.onmousemove = function(e) {
  */
 
 Powerange.prototype.init = function() {
-  // this.hide();
+  this.hide();
   this.append();
   this.bindEvents();
   this.setRange(this.options.min, this.options.max);
-  this.setPosition((this.slider.offsetWidth - this.handle.offsetWidth) / ((this.options.max - this.options.min) / this.options.start));
+  this.setStart(this.options.start);
   this.setValue();
 };
