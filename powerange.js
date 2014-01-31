@@ -17,7 +17,8 @@
  *
  */
 
-var mouse = require('mouse');
+var mouse = require('mouse')
+  , percentage = require('percentage-calc');
 
 /**
  * Expose `Powerange`.
@@ -180,12 +181,10 @@ Powerange.prototype.setStart = function(start) {
   if (start < this.options.min) start = this.options.min;
   if (start > this.options.max) start = this.options.max;
 
-  var value = start - this.options.min
-    , interval = this.options.max - this.options.min
-    , flag = value / interval
-    , result = flag * 100;
+  var part = percentage.from(start - this.options.min, this.options.max - this.options.min)
+    , position = percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth);
 
-  this.setPosition((result / 100) * (this.slider.offsetWidth - this.handle.offsetWidth));
+  this.setPosition(position);
 };
 
 /**
@@ -210,7 +209,7 @@ Powerange.prototype.setValue = function () {
   var handleLeft = parseFloat(this.handle.style.left)
     , sliderWidth = this.slider.offsetWidth - this.handle.offsetWidth
     , flag = handleLeft / sliderWidth
-    , result = flag * (this.options.max - this.options.min) + this.options.min;
+    , result = flag * this.options.max;
 
   result = (this.options.decimal) ? (Math.round(result * 10) / 10) : Math.round(result);
 
