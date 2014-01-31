@@ -206,14 +206,12 @@ Powerange.prototype.setPosition = function(val) {
  */
 
 Powerange.prototype.setValue = function () {
-  var handleLeft = parseFloat(this.handle.style.left)
-    , sliderWidth = this.slider.offsetWidth - this.handle.offsetWidth
-    , flag = handleLeft / sliderWidth
-    , result = flag * this.options.max;
+  var part = percentage.from(parseFloat(this.handle.style.left), this.slider.offsetWidth - this.handle.offsetWidth)
+    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
 
-  result = (this.options.decimal) ? (Math.round(result * 10) / 10) : Math.round(result);
+  value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
 
-  this.element.value = result;
+  this.element.value = value;
 };
 
 /**
@@ -269,7 +267,7 @@ Powerange.prototype.onmousemove = function(e) {
  */
 
 Powerange.prototype.init = function() {
-  this.hide();
+  // this.hide();
   this.append();
   this.bindEvents();
   this.setRange(this.options.min, this.options.max);
