@@ -267,7 +267,7 @@ Powerange.prototype.onmousemove = function(e) {
  */
 
 Powerange.prototype.init = function() {
-  // this.hide();
+  this.hide();
   this.append();
   this.bindEvents();
   this.setRange(this.options.min, this.options.max);
