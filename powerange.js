@@ -35,6 +35,8 @@ module.exports = Powerange;
 var defaults = {
     color: '#a9acb1'
   , decimal: false
+  , disable: false
+  , disableOpacity: 0.5
   , min: 0
   , max: 100
   , start: 0
@@ -229,6 +231,19 @@ Powerange.prototype.insertAfter = function(reference, target) {
 };
 
 /**
+ * Disable range slider.
+ *
+ * @api private
+ */
+
+Powerange.prototype.disable = function() {
+  if (this.options.min == this.options.max || this.options.min > this.options.max || this.options.disable) {
+    this.mouse.unbind();
+    this.slider.style.opacity = this.options.disableOpacity;
+  }
+};
+
+/**
  * On mouse down.
  *
  * @param {Object} e
@@ -269,9 +284,10 @@ Powerange.prototype.onmousemove = function(e) {
  */
 
 Powerange.prototype.init = function() {
-  // this.hide();
+  this.hide();
   this.append();
   this.bindEvents();
   this.setStart(this.options.start);
   this.setRange(this.options.min, this.options.max);
+  this.disable();
 };
