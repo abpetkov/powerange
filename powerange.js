@@ -180,11 +180,13 @@ Powerange.prototype.setRange = function(min, max) {
 Powerange.prototype.setStart = function(start) {
   if (start < this.options.min) start = this.options.min;
   if (start > this.options.max) start = this.options.max;
+  if (this.options.min >= this.options.max) this.options.min = this.options.max;
 
-  var part = percentage.from(start - this.options.min, this.options.max - this.options.min)
+  var part = percentage.from(start - this.options.min, this.options.max - this.options.min) || 0
     , position = percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth);
 
   this.setPosition(position);
+  this.setValue();
 };
 
 /**
@@ -267,10 +269,9 @@ Powerange.prototype.onmousemove = function(e) {
  */
 
 Powerange.prototype.init = function() {
-  this.hide();
+  // this.hide();
   this.append();
   this.bindEvents();
-  this.setRange(this.options.min, this.options.max);
   this.setStart(this.options.start);
-  this.setValue();
+  this.setRange(this.options.min, this.options.max);
 };
