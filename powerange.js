@@ -158,6 +158,18 @@ Powerange.prototype.create = function(type, name) {
 };
 
 /**
+ * Insert element after another element.
+ *
+ * @param {Object} reference
+ * @param {Object} target
+ * @api private
+ */
+
+Powerange.prototype.insertAfter = function(reference, target) {
+  reference.parentNode.insertBefore(target, reference.nextSibling);
+};
+
+/**
  * Set min and max values.
  *
  * @param {Number} min
@@ -216,18 +228,6 @@ Powerange.prototype.setValue = function () {
   value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
 
   this.element.value = value;
-};
-
-/**
- * Insert element after another element.
- *
- * @param {Object} reference
- * @param {Object} target
- * @api private
- */
-
-Powerange.prototype.insertAfter = function(reference, target) {
-  reference.parentNode.insertBefore(target, reference.nextSibling);
 };
 
 /**
