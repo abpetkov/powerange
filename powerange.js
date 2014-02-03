@@ -18,13 +18,35 @@
  */
 
 var mouse = require('mouse')
+  , inherits = require('super')
   , percentage = require('percentage-calc');
 
 /**
- * Expose `Powerange`.
+ * Expose proper type of `Powerange`.
  */
 
-module.exports = Powerange;
+module.exports = function(element, options) {
+  options = options || {};
+
+  for (var i in defaults) {
+    if (options[i] == null) {
+      options[i] = defaults[i];
+    }
+  }
+
+  if (options.vertical) {
+    return new Vertical(element, options);
+  } else {
+    return new Horizontal(element, options);
+  }
+};
+
+/**
+ * Inherit the main class.
+ */
+
+inherits(Horizontal, Powerange);
+inherits(Vertical, Powerange);
 
 /**
  * Set default values.
@@ -59,16 +81,34 @@ function Powerange(element, options) {
   this.options = options || {};
   this.slider = this.create('span', 'range-bar');
 
-  for (var i in defaults) {
-    if (this.options[i] == null) {
-      this.options[i] = defaults[i];
-    }
-  }
-
   if (typeof this.options.start !== 'number') this.options.start = defaults.start;
   if (typeof this.options.decimal !== 'boolean') this.options.decimal = defaults.decimal;
 
   if (this.element !== null && this.element.type === 'text') this.init();
+}
+
+/**
+ * Create horizontal slider object.
+ *
+ * @api public
+ */
+
+function Horizontal() {
+  Powerange.apply(this, arguments);
+
+  this.initHorizontal();
+}
+
+/**
+ * Create vertical slider object.
+ *
+ * @api public
+ */
+
+function Vertical() {
+  Powerange.apply(this, arguments);
+
+  this.initVertical();
 }
 
 /**
@@ -132,8 +172,6 @@ Powerange.prototype.generate = function(type) {
       }
   };
 
-  if (this.options.vertical) this.slider.className += ' vertical';
-
   for (var key in elems) {
     if (elems.hasOwnProperty(key)) {
       var temp = this.create(elems[key].type, elems[key].selector);
@@ -188,54 +226,16 @@ Powerange.prototype.setRange = function(min, max) {
 };
 
 /**
- * Set starting position.
+ * Check values.
  *
  * @param {Number} start
  * @api private
  */
 
-Powerange.prototype.setStart = function(start) {
-  if (start < this.options.min) start = this.options.min;
-  if (start > this.options.max) start = this.options.max;
+Powerange.prototype.checkValues = function(start) {
+  if (start < this.options.min) this.options.start = this.options.min;
+  if (start > this.options.max) this.options.start = this.options.max;
   if (this.options.min >= this.options.max) this.options.min = this.options.max;
-
-  var part = percentage.from(start - this.options.min, this.options.max - this.options.min) || 0
-    , position = (!this.options.vertical) ? percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth) : percentage.of(part, this.slider.offsetHeight - this.handle.offsetHeight);
-
-  this.setPosition(position);
-  this.setValue();
-};
-
-/**
- * Set current position.
- *
- * @param {Number} val
- * @api private
- */
-
-Powerange.prototype.setPosition = function(val) {
-  if (!this.options.vertical) {
-    this.handle.style.left = val + 'px';
-    this.slider.querySelector('.range-quantity').style.width = val + 'px';
-  } else {
-    this.handle.style.bottom = val + 'px';
-    this.slider.querySelector('.range-quantity').style.height = val + 'px';
-  }
-};
-
-/**
- * Set current value.
- *
- * @api private
- */
-
-Powerange.prototype.setValue = function () {
-  var part = (!this.options.vertical) ? percentage.from(parseFloat(this.handle.style.left), this.slider.offsetWidth - this.handle.offsetWidth) : percentage.from(parseFloat(this.handle.style.bottom), this.slider.offsetHeight - this.handle.offsetHeight)
-    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
-
-  value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
-
-  this.element.value = value;
 };
 
 /**
@@ -252,17 +252,156 @@ Powerange.prototype.disable = function() {
 };
 
 /**
- * Slider movement.
+ * Initialize main class.
  *
- * @param {Number} begin
- * @param {Number} end
  * @api private
  */
 
-Powerange.prototype.movement = function(begin, end) {
-  if (begin <= 0) this.setPosition(0);
-  else if (begin >= end) this.setPosition(end);
-  else this.setPosition(begin);
+Powerange.prototype.init = function() {
+  this.hide();
+  this.append();
+  this.bindEvents();
+  this.checkValues(this.options.start);
+  this.setRange(this.options.min, this.options.max);
+  this.disable();
+};
+
+/**
+ * Set horizontal slider position.
+ *
+ * @param {Number} start
+ * @api private
+ */
+
+Horizontal.prototype.setStart = function(start) {
+  var part = percentage.from(start - this.options.min, this.options.max - this.options.min) || 0
+    , position = percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth);
+
+  this.setPosition(position);
+  this.setValue();
+};
+
+/**
+ * Set horizontal slider current position.
+ *
+ * @param {Number} val
+ * @api private
+ */
+
+Horizontal.prototype.setPosition = function(val) {
+  this.handle.style.left = val + 'px';
+  this.slider.querySelector('.range-quantity').style.width = val + 'px';
+};
+
+/**
+ * Set horizontal slider current value.
+ *
+ * @api private
+ */
+
+Horizontal.prototype.setValue = function () {
+  var part = percentage.from(parseFloat(this.handle.style.left), this.slider.offsetWidth - this.handle.offsetWidth)
+    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
+
+  value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
+
+  this.element.value = value;
+};
+
+/**
+ * On horizontal slider mouse down.
+ *
+ * @param {Object} e
+ * @api private
+ */
+
+Horizontal.prototype.onmousedown = function(e) {
+  this.startX = e.clientX;
+  this.handleOffsetX = this.handle.offsetLeft;
+  this.restrictHandleX = this.slider.offsetWidth - this.handle.offsetWidth;
+};
+
+/**
+ * On horizontal slider mouse move.
+ *
+ * @param {Object} e
+ * @api private
+ */
+
+Horizontal.prototype.onmousemove = function(e) {
+  var leftOffset = this.handleOffsetX + e.clientX - this.startX;
+
+  if (leftOffset <= 0) {
+    this.setPosition(0);
+  } else if (leftOffset >= this.restrictHandleX) {
+    this.setPosition(this.restrictHandleX);
+  } else {
+    this.setPosition(leftOffset);
+  }
+
+  this.setValue();
+};
+
+/**
+ * Initialize horizontal class.
+ *
+ * @api private
+ */
+
+Horizontal.prototype.initHorizontal = function() {
+  this.setStart(this.options.start);
+};
+
+/**
+ * Set vertical slider position.
+ *
+ * @param {Number} start
+ * @api private
+ */
+
+Vertical.prototype.setStart = function(start) {
+  var part = percentage.from(start - this.options.min, this.options.max - this.options.min) || 0
+    , position = percentage.of(part, this.slider.offsetHeight - this.handle.offsetHeight);
+
+  this.setPosition(position);
+  this.setValue();
+};
+
+/**
+ * Set vertical slider current position.
+ *
+ * @param {Number} val
+ * @api private
+ */
+
+Vertical.prototype.setPosition = function(val) {
+  this.handle.style.bottom = val + 'px';
+  this.slider.querySelector('.range-quantity').style.height = val + 'px';
+};
+
+/**
+ * Set vertical slider current value.
+ *
+ * @api private
+ */
+
+Vertical.prototype.setValue = function () {
+  var part = percentage.from(parseFloat(this.handle.style.bottom), this.slider.offsetHeight - this.handle.offsetHeight)
+    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
+
+  value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
+
+  this.element.value = value;
+};
+
+/**
+ * Add additional class to vertical slider.
+ *
+ * @api private
+ */
+
+Vertical.prototype.addClass = function() {
+  this.slider.className += ' vertical';
 };
 
 /**
@@ -272,43 +411,40 @@ Powerange.prototype.movement = function(begin, end) {
  * @api private
  */
 
-Powerange.prototype.onmousedown = function(e) {
-  if (!this.options.vertical) {
-    this.startX = e.clientX;
-    this.handleOffsetX = this.handle.offsetLeft;
-    this.restrictHandleX = this.slider.offsetWidth - this.handle.offsetWidth;
-  } else {
-    this.startY = e.clientY;
-    this.handleOffsetY = this.slider.offsetHeight - this.handle.offsetHeight - this.handle.offsetTop;
-    this.restrictHandleY = this.slider.offsetHeight - this.handle.offsetHeight;
-  }
+Vertical.prototype.onmousedown = function(e) {
+  this.startY = e.clientY;
+  this.handleOffsetY = this.slider.offsetHeight - this.handle.offsetHeight - this.handle.offsetTop;
+  this.restrictHandleY = this.slider.offsetHeight - this.handle.offsetHeight;
 };
 
 /**
- * On mouse move.
+ * On vertical slider mouse move.
  *
  * @param {Object} e
  * @api private
  */
 
-Powerange.prototype.onmousemove = function(e) {
-  if (!this.options.vertical) this.movement(this.handleOffsetX + e.clientX - this.startX, this.restrictHandleX);
-  else this.movement(this.handleOffsetY + this.startY - e.clientY, this.restrictHandleY);
+Vertical.prototype.onmousemove = function(e) {
+  var bottomOffset = this.handleOffsetY + this.startY - e.clientY;
+
+  if (bottomOffset <= 0) {
+    this.setPosition(0);
+  } else if (bottomOffset >= this.restrictHandleY) {
+    this.setPosition(this.restrictHandleY);
+  } else {
+    this.setPosition(bottomOffset);
+  }
 
   this.setValue();
 };
 
 /**
- * Initialize.
+ * Initialize vertical class.
  *
  * @api private
  */
 
-Powerange.prototype.init = function() {
-  this.hide();
-  this.append();
-  this.bindEvents();
+Vertical.prototype.initVertical = function() {
+  this.addClass();
   this.setStart(this.options.start);
-  this.setRange(this.options.min, this.options.max);
-  this.disable();
 };

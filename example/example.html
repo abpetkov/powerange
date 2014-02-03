@@ -11,10 +11,10 @@
   <div class="container">
 
     <input type="text" class="js-powerange" />
-
-    <div style="margin-top: 80px; height: 200px;">
-      <input type="text" class="js-powerange-vertical" />
-    </div>
+    <br />
+    <br />
+    <br />
+    <input type="text" class="js-powerange-vert" />
 
   </div>
 
@@ -22,9 +22,10 @@
   var Powerange = require('powerange');
 
   var elem = document.querySelector('.js-powerange');
-  var vert = document.querySelector('.js-powerange-vertical');
   var init = new Powerange(elem);
-  var init = new Powerange(vert, { vertical: true });
+
+  var vert = document.querySelector('.js-powerange-vert');
+  var initVert = new Powerange(vert, { vertical: true });
 </script>
 </body>
 </html>
