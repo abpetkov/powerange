@@ -40,6 +40,7 @@ var defaults = {
   , min: 0
   , max: 100
   , start: 0
+  , vertical: false
 };
 
 /**
@@ -131,6 +132,8 @@ Powerange.prototype.generate = function(type) {
       }
   };
 
+  if (this.options.vertical) this.slider.className += ' vertical';
+
   for (var key in elems) {
     if (elems.hasOwnProperty(key)) {
       var temp = this.create(elems[key].type, elems[key].selector);
@@ -197,7 +200,7 @@ Powerange.prototype.setStart = function(start) {
   if (this.options.min >= this.options.max) this.options.min = this.options.max;
 
   var part = percentage.from(start - this.options.min, this.options.max - this.options.min) || 0
-    , position = percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth);
+    , position = (!this.options.vertical) ? percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth) : percentage.of(part, this.slider.offsetHeight - this.handle.offsetHeight);
 
   this.setPosition(position);
   this.setValue();
@@ -211,8 +214,13 @@ Powerange.prototype.setStart = function(start) {
  */
 
 Powerange.prototype.setPosition = function(val) {
-  this.handle.style.left = val + 'px';
-  this.slider.querySelector('.range-quantity').style.width = val + 'px';
+  if (!this.options.vertical) {
+    this.handle.style.left = val + 'px';
+    this.slider.querySelector('.range-quantity').style.width = val + 'px';
+  } else {
+    this.handle.style.bottom = val + 'px';
+    this.slider.querySelector('.range-quantity').style.height = val + 'px';
+  }
 };
 
 /**
@@ -222,7 +230,7 @@ Powerange.prototype.setPosition = function(val) {
  */
 
 Powerange.prototype.setValue = function () {
-  var part = percentage.from(parseFloat(this.handle.style.left), this.slider.offsetWidth - this.handle.offsetWidth)
+  var part = (!this.options.vertical) ? percentage.from(parseFloat(this.handle.style.left), this.slider.offsetWidth - this.handle.offsetWidth) : percentage.from(parseFloat(this.handle.style.bottom), this.slider.offsetHeight - this.handle.offsetHeight)
     , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
 
   value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
@@ -251,9 +259,15 @@ Powerange.prototype.disable = function() {
  */
 
 Powerange.prototype.onmousedown = function(e) {
-  this.startX = e.clientX;
-  this.handleOffsetX = this.handle.offsetLeft;
-  this.restrictHandle = this.slider.offsetWidth - this.handle.offsetWidth;
+  if (!this.options.vertical) {
+    this.startX = e.clientX;
+    this.handleOffsetX = this.handle.offsetLeft;
+    this.restrictHandleX = this.slider.offsetWidth - this.handle.offsetWidth;
+  } else {
+    this.startY = e.clientY;
+    this.handleOffsetY = this.slider.offsetHeight - this.handle.offsetHeight - this.handle.offsetTop;
+    this.restrictHandleY = this.slider.offsetHeight - this.handle.offsetHeight;
+  }
 };
 
 /**
@@ -264,14 +278,26 @@ Powerange.prototype.onmousedown = function(e) {
  */
 
 Powerange.prototype.onmousemove = function(e) {
-  var leftOffset = this.handleOffsetX + e.clientX - this.startX;
+  if (!this.options.vertical) {
+    var leftOffset = this.handleOffsetX + e.clientX - this.startX;
 
-  if (leftOffset <= 0) {
-    this.setPosition(0);
-  } else if (leftOffset >= this.restrictHandle) {
-    this.setPosition(this.restrictHandle);
+    if (leftOffset <= 0) {
+      this.setPosition(0);
+    } else if (leftOffset >= this.restrictHandleX) {
+      this.setPosition(this.restrictHandleX);
+    } else {
+      this.setPosition(leftOffset);
+    }
   } else {
-    this.setPosition(leftOffset);
+    var bottomOffset = this.handleOffsetY + this.startY - e.clientY;
+
+    if (bottomOffset <= 0) {
+      this.setPosition(0);
+    } else if (bottomOffset >= this.restrictHandleY) {
+      this.setPosition(this.restrictHandleY);
+    } else {
+      this.setPosition(bottomOffset);
+    }
   }
 
   this.setValue();

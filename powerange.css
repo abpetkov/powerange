@@ -50,3 +50,37 @@
 .range-max {
   right: -30px;
 }
+
+.vertical {
+  width: 4px;
+  height: 100%;
+}
+
+.vertical .range-quantity {
+  bottom: 0;
+  height: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.vertical .range-handle {
+  bottom: 0;
+  left: -13px;
+  top: auto;
+}
+
+.vertical .range-min,
+.vertical .range-max {
+  height: 15px;
+  left: -11px;
+  right: auto;
+  top: auto;
+}
+
+.vertical .range-min {
+  bottom: -30px;
+}
+
+.vertical .range-max {
+  top: -30px;
+}
