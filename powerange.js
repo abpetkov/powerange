@@ -252,6 +252,20 @@ Powerange.prototype.disable = function() {
 };
 
 /**
+ * Slider movement.
+ *
+ * @param {Number} begin
+ * @param {Number} end
+ * @api private
+ */
+
+Powerange.prototype.movement = function(begin, end) {
+  if (begin <= 0) this.setPosition(0);
+  else if (begin >= end) this.setPosition(end);
+  else this.setPosition(begin);
+};
+
+/**
  * On mouse down.
  *
  * @param {Object} e
@@ -278,27 +292,8 @@ Powerange.prototype.onmousedown = function(e) {
  */
 
 Powerange.prototype.onmousemove = function(e) {
-  if (!this.options.vertical) {
-    var leftOffset = this.handleOffsetX + e.clientX - this.startX;
-
-    if (leftOffset <= 0) {
-      this.setPosition(0);
-    } else if (leftOffset >= this.restrictHandleX) {
-      this.setPosition(this.restrictHandleX);
-    } else {
-      this.setPosition(leftOffset);
-    }
-  } else {
-    var bottomOffset = this.handleOffsetY + this.startY - e.clientY;
-
-    if (bottomOffset <= 0) {
-      this.setPosition(0);
-    } else if (bottomOffset >= this.restrictHandleY) {
-      this.setPosition(this.restrictHandleY);
-    } else {
-      this.setPosition(bottomOffset);
-    }
-  }
+  if (!this.options.vertical) this.movement(this.handleOffsetX + e.clientX - this.startX, this.restrictHandleX);
+  else this.movement(this.handleOffsetY + this.startY - e.clientY, this.restrictHandleY);
 
   this.setValue();
 };
