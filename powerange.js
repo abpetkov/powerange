@@ -253,6 +253,23 @@ Powerange.prototype.disable = function() {
 };
 
 /**
+ * Handle the onchange event.
+ *
+ * @param {Boolean} state
+ * @api private
+ */
+
+Powerange.prototype.changeEvent = function(state) {
+  if (typeof Event === 'function' || !document.fireEvent) {
+    var event = document.createEvent('HTMLEvents');
+    event.initEvent('change', false, true);
+    this.element.dispatchEvent(event);
+  } else {
+    this.element.fireEvent('onchange');
+  }
+};
+
+/**
  * Initialize main class.
  *
  * @api private
@@ -308,6 +325,7 @@ Horizontal.prototype.setValue = function () {
 
   this.element.value = value;
   this.options.callback();
+  this.changeEvent();
 };
 
 /**
@@ -395,6 +413,7 @@ Vertical.prototype.setValue = function () {
 
   this.element.value = value;
   this.options.callback();
+  this.changeEvent();
 };
 
 /**
