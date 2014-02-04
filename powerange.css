@@ -36,11 +36,14 @@
 
 .range-min,
 .range-max {
+  color: #181819;
   font-size: 12px;
+  height: 20px;
   position: absolute;
   text-align: center;
-  top: -4px;
-  width: 25px;
+  top: -9px;
+  padding-top: 4px;
+  width: 24px;
 }
 
 .range-min {
@@ -71,8 +74,7 @@
 
 .vertical .range-min,
 .vertical .range-max {
-  height: 15px;
-  left: -11px;
+  left: -10px;
   right: auto;
   top: auto;
 }

@@ -55,10 +55,10 @@ inherits(Vertical, Powerange);
  */
 
 var defaults = {
-    color: '#a9acb1'
-  , decimal: false
+    decimal: false
   , disable: false
   , disableOpacity: 0.5
+  , hideRange: false
   , min: 0
   , max: 100
   , start: 0
@@ -219,7 +219,7 @@ Powerange.prototype.insertAfter = function(reference, target) {
  */
 
 Powerange.prototype.setRange = function(min, max) {
-  if (typeof min === 'number' && typeof max === 'number') {
+  if (typeof min === 'number' && typeof max === 'number' && !this.options.hideRange) {
     this.slider.querySelector('.range-min').innerHTML = min;
     this.slider.querySelector('.range-max').innerHTML = max;
   }
