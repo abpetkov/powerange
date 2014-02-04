@@ -16,6 +16,7 @@
     <br />
     <input type="text" class="js-powerange-vert" />
 
+    <div id="result" style="margin-top: 100px"></div>
   </div>
 
 <script type="text/javascript">
@@ -25,7 +26,11 @@
   var init = new Powerange(elem);
 
   var vert = document.querySelector('.js-powerange-vert');
-  var initVert = new Powerange(vert, { vertical: true });
+  var initVert = new Powerange(vert, { min: -40, max: 140, start: 70, vertical: true, callback: change });
+
+  function change() {
+    document.getElementById('result').innerHTML = vert.value;
+  };
 </script>
 </body>
 </html>

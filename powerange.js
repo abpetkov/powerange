@@ -55,7 +55,8 @@ inherits(Vertical, Powerange);
  */
 
 var defaults = {
-    decimal: false
+    callback: function() {}
+  , decimal: false
   , disable: false
   , disableOpacity: 0.5
   , hideRange: false
@@ -306,6 +307,7 @@ Horizontal.prototype.setValue = function () {
   value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
 
   this.element.value = value;
+  this.options.callback();
 };
 
 /**
@@ -392,6 +394,7 @@ Vertical.prototype.setValue = function () {
   value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
 
   this.element.value = value;
+  this.options.callback();
 };
 
 /**
