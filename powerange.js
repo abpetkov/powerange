@@ -391,7 +391,7 @@ Vertical.prototype.setValue = function () {
   var part = percentage.from(parseFloat(this.handle.style.bottom), this.slider.offsetHeight - this.handle.offsetHeight)
     , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
 
-  value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
+  value = (this.options.decimal) ? (Math.round(value * 100) / 100) : Math.round(value);
 
   this.element.value = value;
   this.options.callback();
