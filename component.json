@@ -11,7 +11,10 @@
   , "license": "MIT"
   , "main": "powerange.js"
   , "scripts": [
-      "powerange.js"
+      "powerange.js",
+      "main.js",
+      "horizontal.js",
+      "vertical.js"
     ]
   , "styles": [
       "powerange.css"

@@ -50,7 +50,7 @@ module.exports = function(grunt) {
             , tasks: ['componentbuild:development']
           }
         , js: {
-              files: ['<%= pkg.name %>.js']
+              files: ['<%= pkg.name %>.js', 'vertical.js', 'horizontal.js', 'main.js']
             , tasks: ['componentbuild:development']
           }
       }
