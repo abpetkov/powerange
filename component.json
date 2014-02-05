@@ -9,15 +9,15 @@
       , "iOS7"
     ]
   , "license": "MIT"
-  , "main": "powerange.js"
+  , "main": "lib/powerange.js"
   , "scripts": [
-      "powerange.js",
-      "main.js",
-      "horizontal.js",
-      "vertical.js"
+        "lib/powerange.js"
+      , "lib/main.js"
+      , "lib/horizontal.js"
+      , "lib/vertical.js"
     ]
   , "styles": [
-      "powerange.css"
+      "lib/powerange.css"
     ]
   , "dependencies": {
         "ui-component/mouse": "0.0.1"

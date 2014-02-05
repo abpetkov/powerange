@@ -4,6 +4,7 @@ module.exports = function(grunt) {
   var config = {
       buildDir: 'build/'
     , distDir: 'dist/'
+    , libDir: 'lib/'
     , name: 'Powerange'
   };
 
@@ -46,11 +47,14 @@ module.exports = function(grunt) {
 
     , watch: {
           css: {
-              files: ['<%= pkg.name %>.css']
+              files: ['<%= config.libDir %><%= pkg.name %>.css']
             , tasks: ['componentbuild:development']
           }
         , js: {
-              files: ['<%= pkg.name %>.js', 'vertical.js', 'horizontal.js', 'main.js']
+              files: ['<%= config.libDir %><%= pkg.name %>.js'
+                    , '<%= config.libDir %>vertical.js'
+                    , '<%= config.libDir %>horizontal.js'
+                    , '<%= config.libDir %>main.js']
             , tasks: ['componentbuild:development']
           }
       }
