@@ -23,5 +23,6 @@
         "ui-component/mouse": "0.0.1"
       , "vesln/super": "0.2.3"
       , "abpetkov/percentage-calc": "*"
+      , "abpetkov/closest-num": "*"
     }
 }
