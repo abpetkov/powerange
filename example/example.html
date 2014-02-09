@@ -14,8 +14,11 @@
 <body>
 
   <div class="container">
-    <input type="text" class="js-powerange" />
+    <input type="text" class="js-default" />
     <br />
+    <br />
+    <br />
+    <input type="text" class="js-powerange" />
     <br />
     <br />
     <br />
@@ -26,6 +29,9 @@
   <script src="../build/build.js"></script>
   <script type="text/javascript">
     var Powerange = require('powerange');
+
+    var def = document.querySelector('.js-default');
+    var initdef = new Powerange(def, { min: -50, max: 50, start: -50 });
 
     var elem = document.querySelector('.js-powerange');
     var init = new Powerange(elem, { step: 20 });
