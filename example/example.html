@@ -31,10 +31,10 @@
     var Powerange = require('powerange');
 
     var def = document.querySelector('.js-default');
-    var initdef = new Powerange(def, { min: -50, max: 50, start: -50 });
+    var initdef = new Powerange(def);
 
     var elem = document.querySelector('.js-powerange');
-    var init = new Powerange(elem, { step: 20 });
+    var init = new Powerange(elem, { step: 6 });
 
     var vert = document.querySelector('.js-vert');
     var initvert = new Powerange(vert, { vertical: true, step: 20 });
