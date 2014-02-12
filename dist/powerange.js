@@ -669,13 +669,12 @@ exports.from = function(part, target) {
   if (exports.isNumber(part) && exports.isNumber(target)) return (part / target) * 100;
 };
 });
-require.register("powerange/lib/powerange.js", function(exports, require, module){
-
+require.register("abpetkov-closest-num/closest-num.js", function(exports, require, module){
 /**
- * Powerange 0.0.1
- * http://abpetkov.github.io/powerange/
+ * Closest-num 0.0.1
+ * https://github.com/abpetkov/closest-num
  *
- * Authored by Alexander Petkov
+ * Author: Alexander Petkov
  * https://github.com/abpetkov
  *
  * Copyright 2014, Alexander Petkov
@@ -684,6 +683,30 @@ require.register("powerange/lib/powerange.js", function(exports, require, module
  *
  */
 
+/**
+ * Get closest number in array.
+ *
+ * @param {Number} target
+ * @param {Array} points
+ * @returns {Number} closest
+ * @api private
+ */
+
+exports.find = function(target, points) {
+  var diff = null
+    , current = null
+    , closest = points[0];
+
+  for (i = 0; i < points.length; i++) {
+    diff = Math.abs(target - closest);
+    current = Math.abs(target - points[i]);
+    if (current < diff) closest = points[i];
+  }
+
+  return closest;
+};
+});
+require.register("powerange/lib/powerange.js", function(exports, require, module){
 /**
  * Require classes.
  */
@@ -706,7 +729,8 @@ var defaults = {
   , hideRange: false
   , min: 0
   , max: 100
-  , start: 0
+  , start: null
+  , step: null
   , vertical: false
 };
 
@@ -736,7 +760,8 @@ require.register("powerange/lib/main.js", function(exports, require, module){
  *
  */
 
-var mouse = require('mouse');
+var mouse = require('mouse')
+  , percentage = require('percentage-calc');
 
 /**
  * Expose `Powerange`.
@@ -799,12 +824,11 @@ Powerange.prototype.append = function() {
 /**
  * Generate the appropriate type of slider.
  *
- * @param {String} type
  * @returns {Object} this.slider
  * @api private
  */
 
-Powerange.prototype.generate = function(type) {
+Powerange.prototype.generate = function() {
   var elems = {
       'handle': {
           'type': 'span'
@@ -878,6 +902,49 @@ Powerange.prototype.setRange = function(min, max) {
 };
 
 /**
+ * Set slider current value.
+ *
+ * @param {Number} offset
+ * @param {Number} size
+ * @api private
+ */
+
+Powerange.prototype.setValue = function (offset, size) {
+  var part = percentage.from(parseFloat(offset), size)
+    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
+
+  value = (this.options.decimal) ? (Math.round(value * 100) / 100) : Math.round(value);
+
+  this.element.value = value;
+  this.options.callback();
+  this.changeEvent();
+};
+
+/**
+ * Set step.
+ *
+ * @param {Number} sliderSize
+ * @param {Number} handleSize
+ * @returns {Array} this.steps
+ * @api private
+ */
+
+Powerange.prototype.step = function(sliderSize, handleSize) {
+  var dimension = sliderSize - handleSize
+    , part = percentage.from(this.options.step, this.options.max - this.options.min)
+    , interval = percentage.of(part, dimension)
+    , steps = [];
+
+  for (i = 0; i <= dimension; i += interval) {
+    steps.push(i);
+  }
+
+  this.steps = steps;
+
+  return this.steps;
+};
+
+/**
  * Check values.
  *
  * @param {Number} start
@@ -902,6 +969,50 @@ Powerange.prototype.disable = function() {
     this.slider.style.opacity = this.options.disableOpacity;
   }
 };
+
+/**
+ * Make element unselectable.
+ *
+ * @param {Object} element
+ * @param {Boolean} set
+ * @api private
+ */
+
+Powerange.prototype.unselectable = function(element, set) {
+  if (!this.hasClass(this.slider, 'unselectable') && set === true) {
+    this.slider.className += ' unselectable';
+  } else {
+    this.removeClass(this.slider, 'unselectable');
+  }
+};
+
+/**
+ * Check if element has class.
+ *
+ * @param {Object} element
+ * @param {String} cls
+ * @returns {Boolean}
+ * @api private
+ */
+
+Powerange.prototype.hasClass = function(element, cls) {
+  return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+/**
+ * Remove class.
+ *
+ * @param {Object} element
+ * @param {String} cls
+ * @api private
+ */
+
+Powerange.prototype.removeClass = function(element, cls) {
+  if (this.hasClass(element, cls)) {
+    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+    element.className = element.className.replace(reg, '');
+  }
+}
 
 /**
  * Handle the onchange event.
@@ -942,7 +1053,8 @@ require.register("powerange/lib/horizontal.js", function(exports, require, modul
  */
 
 var inherits = require('super')
-  , percentage = require('percentage-calc');
+  , percentage = require('percentage-calc')
+  , closest = require('closest-num');
 
 /**
  * Require main class.
@@ -981,11 +1093,13 @@ inherits(Horizontal, Powerange);
  */
 
 Horizontal.prototype.setStart = function(start) {
-  var part = percentage.from(start - this.options.min, this.options.max - this.options.min) || 0
-    , position = percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth);
+  var begin = (start === null) ? this.options.min : start
+    , part = percentage.from(begin - this.options.min, this.options.max - this.options.min) || 0
+    , offset = percentage.of(part, this.slider.offsetWidth - this.handle.offsetWidth)
+    , position = (this.options.step) ? closest.find(offset, this.steps) : offset;
 
   this.setPosition(position);
-  this.setValue();
+  this.setValue(this.handle.style.left, this.slider.offsetWidth - this.handle.offsetWidth);
 };
 
 /**
@@ -1001,24 +1115,7 @@ Horizontal.prototype.setPosition = function(val) {
 };
 
 /**
- * Set horizontal slider current value.
- *
- * @api private
- */
-
-Horizontal.prototype.setValue = function () {
-  var part = percentage.from(parseFloat(this.handle.style.left), this.slider.offsetWidth - this.handle.offsetWidth)
-    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
-
-  value = (this.options.decimal) ? (Math.round(value * 10) / 10) : Math.round(value);
-
-  this.element.value = value;
-  this.options.callback();
-  this.changeEvent();
-};
-
-/**
- * On horizontal slider mouse down.
+ * On slider mouse down.
  *
  * @param {Object} e
  * @api private
@@ -1028,27 +1125,40 @@ Horizontal.prototype.onmousedown = function(e) {
   this.startX = e.clientX;
   this.handleOffsetX = this.handle.offsetLeft;
   this.restrictHandleX = this.slider.offsetWidth - this.handle.offsetWidth;
+  this.unselectable(this.slider, true);
 };
 
 /**
- * On horizontal slider mouse move.
+ * On slider mouse move.
  *
  * @param {Object} e
  * @api private
  */
 
 Horizontal.prototype.onmousemove = function(e) {
-  var leftOffset = this.handleOffsetX + e.clientX - this.startX;
+  var leftOffset = this.handleOffsetX + e.clientX - this.startX
+    , position = (this.steps) ? closest.find(leftOffset, this.steps) : leftOffset;
 
   if (leftOffset <= 0) {
     this.setPosition(0);
   } else if (leftOffset >= this.restrictHandleX) {
     this.setPosition(this.restrictHandleX);
   } else {
-    this.setPosition(leftOffset);
+    this.setPosition(position);
   }
 
-  this.setValue();
+  this.setValue(this.handle.style.left, this.slider.offsetWidth - this.handle.offsetWidth);
+};
+
+/**
+ * On mouse up.
+ *
+ * @param {Object} e
+ * @api private
+ */
+
+Horizontal.prototype.onmouseup = function(e) {
+  this.unselectable(this.slider, false);
 };
 
 /**
@@ -1058,6 +1168,7 @@ Horizontal.prototype.onmousemove = function(e) {
  */
 
 Horizontal.prototype.initHorizontal = function() {
+  if (this.options.step) this.step(this.slider.offsetWidth, this.handle.offsetWidth);
   this.setStart(this.options.start);
 };
 });
@@ -1068,7 +1179,8 @@ require.register("powerange/lib/vertical.js", function(exports, require, module)
  */
 
 var inherits = require('super')
-  , percentage = require('percentage-calc');
+  , percentage = require('percentage-calc')
+  , closest = require('closest-num');
 
 /**
  * Require main class.
@@ -1107,11 +1219,13 @@ inherits(Vertical, Powerange);
  */
 
 Vertical.prototype.setStart = function(start) {
-  var part = percentage.from(start - this.options.min, this.options.max - this.options.min) || 0
-    , position = percentage.of(part, this.slider.offsetHeight - this.handle.offsetHeight);
+  var begin = (start === null) ? this.options.min : start
+    , part = percentage.from(begin - this.options.min, this.options.max - this.options.min) || 0
+    , offset = percentage.of(part, this.slider.offsetHeight - this.handle.offsetHeight)
+    , position = (this.options.step) ? closest.find(offset, this.steps) : offset;
 
   this.setPosition(position);
-  this.setValue();
+  this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
 };
 
 /**
@@ -1124,23 +1238,6 @@ Vertical.prototype.setStart = function(start) {
 Vertical.prototype.setPosition = function(val) {
   this.handle.style.bottom = val + 'px';
   this.slider.querySelector('.range-quantity').style.height = val + 'px';
-};
-
-/**
- * Set vertical slider current value.
- *
- * @api private
- */
-
-Vertical.prototype.setValue = function () {
-  var part = percentage.from(parseFloat(this.handle.style.bottom), this.slider.offsetHeight - this.handle.offsetHeight)
-    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
-
-  value = (this.options.decimal) ? (Math.round(value * 100) / 100) : Math.round(value);
-
-  this.element.value = value;
-  this.options.callback();
-  this.changeEvent();
 };
 
 /**
@@ -1164,6 +1261,7 @@ Vertical.prototype.onmousedown = function(e) {
   this.startY = e.clientY;
   this.handleOffsetY = this.slider.offsetHeight - this.handle.offsetHeight - this.handle.offsetTop;
   this.restrictHandleY = this.slider.offsetHeight - this.handle.offsetHeight;
+  this.unselectable(this.slider, true);
 };
 
 /**
@@ -1174,17 +1272,29 @@ Vertical.prototype.onmousedown = function(e) {
  */
 
 Vertical.prototype.onmousemove = function(e) {
-  var bottomOffset = this.handleOffsetY + this.startY - e.clientY;
+  var bottomOffset = this.handleOffsetY + this.startY - e.clientY
+    , position = (this.steps) ? closest.find(bottomOffset, this.steps) : bottomOffset;
 
   if (bottomOffset <= 0) {
     this.setPosition(0);
   } else if (bottomOffset >= this.restrictHandleY) {
     this.setPosition(this.restrictHandleY);
   } else {
-    this.setPosition(bottomOffset);
+    this.setPosition(position);
   }
 
-  this.setValue();
+  this.setValue(this.handle.style.bottom, this.slider.offsetHeight - this.handle.offsetHeight);
+};
+
+/**
+ * On mouse up.
+ *
+ * @param {Object} e
+ * @api private
+ */
+
+Vertical.prototype.onmouseup = function(e) {
+  this.unselectable(this.slider, false);
 };
 
 /**
@@ -1195,9 +1305,12 @@ Vertical.prototype.onmousemove = function(e) {
 
 Vertical.prototype.initVertical = function() {
   this.addClass();
+  if (this.options.step) this.step(this.slider.offsetHeight, this.handle.offsetHeight);
   this.setStart(this.options.start);
 };
 });
+
+
 
 
 
@@ -1220,6 +1333,10 @@ require.alias("abpetkov-percentage-calc/percentage-calc.js", "powerange/deps/per
 require.alias("abpetkov-percentage-calc/percentage-calc.js", "powerange/deps/percentage-calc/index.js");
 require.alias("abpetkov-percentage-calc/percentage-calc.js", "percentage-calc/index.js");
 require.alias("abpetkov-percentage-calc/percentage-calc.js", "abpetkov-percentage-calc/index.js");
+require.alias("abpetkov-closest-num/closest-num.js", "powerange/deps/closest-num/closest-num.js");
+require.alias("abpetkov-closest-num/closest-num.js", "powerange/deps/closest-num/index.js");
+require.alias("abpetkov-closest-num/closest-num.js", "closest-num/index.js");
+require.alias("abpetkov-closest-num/closest-num.js", "abpetkov-closest-num/index.js");
 require.alias("powerange/lib/powerange.js", "powerange/index.js");if (typeof exports == "object") {
   module.exports = require("powerange");
 } else if (typeof define == "function" && define.amd) {
