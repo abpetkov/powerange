@@ -1,8 +1,12 @@
-/*
+/**
  *
  * Main stylesheet for Powerange.
  * http://abpetkov.github.io/powerange/
  *
+ */
+
+/**
+ * Horizontal slider style (default).
  */
 
 .range-bar {
@@ -25,13 +29,15 @@
 .range-handle {
   background-color: #fff;
   border-radius: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   cursor: move;
   height: 30px;
   left: 0;
   top: -13px;
   position: absolute;
   width: 30px;
+
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .range-min,
@@ -39,10 +45,10 @@
   color: #181819;
   font-size: 12px;
   height: 20px;
+  padding-top: 4px;
   position: absolute;
   text-align: center;
   top: -9px;
-  padding-top: 4px;
   width: 24px;
 }
 
@@ -54,9 +60,13 @@
   right: -30px;
 }
 
+/**
+ * Vertical slider style.
+ */
+
 .vertical {
-  width: 4px;
   height: 100%;
+  width: 4px;
 }
 
 .vertical .range-quantity {
@@ -86,6 +96,10 @@
 .vertical .range-max {
   top: -30px;
 }
+
+/**
+ * Style for disabling text selection on handle move.
+ */
 
 .unselectable {
   -webkit-touch-callout: none;
