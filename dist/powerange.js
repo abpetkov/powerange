@@ -200,6 +200,202 @@ require.relative = function(parent) {
 
   return localRequire;
 };
+require.register("component-indexof/index.js", function(exports, require, module){
+module.exports = function(arr, obj){
+  if (arr.indexOf) return arr.indexOf(obj);
+  for (var i = 0; i < arr.length; ++i) {
+    if (arr[i] === obj) return i;
+  }
+  return -1;
+};
+});
+require.register("component-classes/index.js", function(exports, require, module){
+/**
+ * Module dependencies.
+ */
+
+var index = require('indexof');
+
+/**
+ * Whitespace regexp.
+ */
+
+var re = /\s+/;
+
+/**
+ * toString reference.
+ */
+
+var toString = Object.prototype.toString;
+
+/**
+ * Wrap `el` in a `ClassList`.
+ *
+ * @param {Element} el
+ * @return {ClassList}
+ * @api public
+ */
+
+module.exports = function(el){
+  return new ClassList(el);
+};
+
+/**
+ * Initialize a new ClassList for `el`.
+ *
+ * @param {Element} el
+ * @api private
+ */
+
+function ClassList(el) {
+  if (!el) throw new Error('A DOM element reference is required');
+  this.el = el;
+  this.list = el.classList;
+}
+
+/**
+ * Add class `name` if not already present.
+ *
+ * @param {String} name
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.add = function(name){
+  // classList
+  if (this.list) {
+    this.list.add(name);
+    return this;
+  }
+
+  // fallback
+  var arr = this.array();
+  var i = index(arr, name);
+  if (!~i) arr.push(name);
+  this.el.className = arr.join(' ');
+  return this;
+};
+
+/**
+ * Remove class `name` when present, or
+ * pass a regular expression to remove
+ * any which match.
+ *
+ * @param {String|RegExp} name
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.remove = function(name){
+  if ('[object RegExp]' == toString.call(name)) {
+    return this.removeMatching(name);
+  }
+
+  // classList
+  if (this.list) {
+    this.list.remove(name);
+    return this;
+  }
+
+  // fallback
+  var arr = this.array();
+  var i = index(arr, name);
+  if (~i) arr.splice(i, 1);
+  this.el.className = arr.join(' ');
+  return this;
+};
+
+/**
+ * Remove all classes matching `re`.
+ *
+ * @param {RegExp} re
+ * @return {ClassList}
+ * @api private
+ */
+
+ClassList.prototype.removeMatching = function(re){
+  var arr = this.array();
+  for (var i = 0; i < arr.length; i++) {
+    if (re.test(arr[i])) {
+      this.remove(arr[i]);
+    }
+  }
+  return this;
+};
+
+/**
+ * Toggle class `name`, can force state via `force`.
+ *
+ * For browsers that support classList, but do not support `force` yet,
+ * the mistake will be detected and corrected.
+ *
+ * @param {String} name
+ * @param {Boolean} force
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.toggle = function(name, force){
+  // classList
+  if (this.list) {
+    if ("undefined" !== typeof force) {
+      if (force !== this.list.toggle(name, force)) {
+        this.list.toggle(name); // toggle again to correct
+      }
+    } else {
+      this.list.toggle(name);
+    }
+    return this;
+  }
+
+  // fallback
+  if ("undefined" !== typeof force) {
+    if (!force) {
+      this.remove(name);
+    } else {
+      this.add(name);
+    }
+  } else {
+    if (this.has(name)) {
+      this.remove(name);
+    } else {
+      this.add(name);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return an array of classes.
+ *
+ * @return {Array}
+ * @api public
+ */
+
+ClassList.prototype.array = function(){
+  var str = this.el.className.replace(/^\s+|\s+$/g, '');
+  var arr = str.split(re);
+  if ('' === arr[0]) arr.shift();
+  return arr;
+};
+
+/**
+ * Check if class `name` is present.
+ *
+ * @param {String} name
+ * @return {ClassList}
+ * @api public
+ */
+
+ClassList.prototype.has =
+ClassList.prototype.contains = function(name){
+  return this.list
+    ? this.list.contains(name)
+    : !! ~index(this.array(), name);
+};
+
+});
 require.register("component-emitter/index.js", function(exports, require, module){
 
 /**
@@ -489,6 +685,96 @@ Mouse.prototype.unbind = function(){
 };
 
 });
+require.register("abpetkov-percentage-calc/percentage-calc.js", function(exports, require, module){
+
+/**
+ * Percentage-Calc 0.0.1
+ * https://github.com/abpetkov/percentage-calc
+ *
+ * Authored by Alexander Petkov
+ * https://github.com/abpetkov
+ *
+ * Copyright 2014, Alexander Petkov
+ * License: The MIT License (MIT)
+ * http://opensource.org/licenses/MIT
+ *
+ */
+
+/**
+ * Check if number.
+ *
+ * @param {Number} num
+ * @returns {Boolean}
+ * @api public
+ */
+
+exports.isNumber = function(num) {
+  return (typeof num === 'number') ? true : false;
+};
+
+/**
+ * Calculate percentage of a number.
+ *
+ * @param {Number} perc
+ * @param {Number} num
+ * @returns {Number} result
+ * @api public
+ */
+
+exports.of = function(perc, num) {
+  if (exports.isNumber(perc) && exports.isNumber(num)) return (perc / 100) * num;
+};
+
+/**
+ * Calculate percentage of a number out ot another number.
+ *
+ * @param {Number} part
+ * @param {Number} target
+ * @returns {Number} result
+ * @api public
+ */
+
+exports.from = function(part, target) {
+  if (exports.isNumber(part) && exports.isNumber(target)) return (part / target) * 100;
+};
+});
+require.register("abpetkov-closest-num/closest-num.js", function(exports, require, module){
+/**
+ * Closest-num 0.0.1
+ * https://github.com/abpetkov/closest-num
+ *
+ * Author: Alexander Petkov
+ * https://github.com/abpetkov
+ *
+ * Copyright 2014, Alexander Petkov
+ * License: The MIT License (MIT)
+ * http://opensource.org/licenses/MIT
+ *
+ */
+
+/**
+ * Get closest number in array.
+ *
+ * @param {Number} target
+ * @param {Array} points
+ * @returns {Number} closest
+ * @api private
+ */
+
+exports.find = function(target, points) {
+  var diff = null
+    , current = null
+    , closest = points[0];
+
+  for (i = 0; i < points.length; i++) {
+    diff = Math.abs(target - closest);
+    current = Math.abs(target - points[i]);
+    if (current < diff) closest = points[i];
+  }
+
+  return closest;
+};
+});
 require.register("vesln-super/lib/super.js", function(exports, require, module){
 /**
  * slice
@@ -616,96 +902,6 @@ exports.merge = function (arr) {
 };
 
 });
-require.register("abpetkov-percentage-calc/percentage-calc.js", function(exports, require, module){
-
-/**
- * Percentage-Calc 0.0.1
- * https://github.com/abpetkov/percentage-calc
- *
- * Authored by Alexander Petkov
- * https://github.com/abpetkov
- *
- * Copyright 2014, Alexander Petkov
- * License: The MIT License (MIT)
- * http://opensource.org/licenses/MIT
- *
- */
-
-/**
- * Check if number.
- *
- * @param {Number} num
- * @returns {Boolean}
- * @api public
- */
-
-exports.isNumber = function(num) {
-  return (typeof num === 'number') ? true : false;
-};
-
-/**
- * Calculate percentage of a number.
- *
- * @param {Number} perc
- * @param {Number} num
- * @returns {Number} result
- * @api public
- */
-
-exports.of = function(perc, num) {
-  if (exports.isNumber(perc) && exports.isNumber(num)) return (perc / 100) * num;
-};
-
-/**
- * Calculate percentage of a number out ot another number.
- *
- * @param {Number} part
- * @param {Number} target
- * @returns {Number} result
- * @api public
- */
-
-exports.from = function(part, target) {
-  if (exports.isNumber(part) && exports.isNumber(target)) return (part / target) * 100;
-};
-});
-require.register("abpetkov-closest-num/closest-num.js", function(exports, require, module){
-/**
- * Closest-num 0.0.1
- * https://github.com/abpetkov/closest-num
- *
- * Author: Alexander Petkov
- * https://github.com/abpetkov
- *
- * Copyright 2014, Alexander Petkov
- * License: The MIT License (MIT)
- * http://opensource.org/licenses/MIT
- *
- */
-
-/**
- * Get closest number in array.
- *
- * @param {Number} target
- * @param {Array} points
- * @returns {Number} closest
- * @api private
- */
-
-exports.find = function(target, points) {
-  var diff = null
-    , current = null
-    , closest = points[0];
-
-  for (i = 0; i < points.length; i++) {
-    diff = Math.abs(target - closest);
-    current = Math.abs(target - points[i]);
-    if (current < diff) closest = points[i];
-  }
-
-  return closest;
-};
-});
 require.register("powerange/lib/powerange.js", function(exports, require, module){
 /**
  * Require classes.
@@ -761,6 +957,7 @@ require.register("powerange/lib/main.js", function(exports, require, module){
  */
 
 var mouse = require('mouse')
+  , classes = require('classes')
   , percentage = require('percentage-calc');
 
 /**
@@ -979,40 +1176,12 @@ Powerange.prototype.disable = function() {
  */
 
 Powerange.prototype.unselectable = function(element, set) {
-  if (!this.hasClass(this.slider, 'unselectable') && set === true) {
-    this.slider.className += ' unselectable';
+  if (!classes(this.slider).has('unselectable') && set === true) {
+    classes(this.slider).add('unselectable');
   } else {
-    this.removeClass(this.slider, 'unselectable');
+    classes(this.slider).remove('unselectable');
   }
 };
-
-/**
- * Check if element has class.
- *
- * @param {Object} element
- * @param {String} cls
- * @returns {Boolean}
- * @api private
- */
-
-Powerange.prototype.hasClass = function(element, cls) {
-  return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
-}
-
-/**
- * Remove class.
- *
- * @param {Object} element
- * @param {String} cls
- * @api private
- */
-
-Powerange.prototype.removeClass = function(element, cls) {
-  if (this.hasClass(element, cls)) {
-    var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-    element.className = element.className.replace(reg, '');
-  }
-}
 
 /**
  * Handle the onchange event.
@@ -1053,8 +1222,8 @@ require.register("powerange/lib/horizontal.js", function(exports, require, modul
  */
 
 var inherits = require('super')
-  , percentage = require('percentage-calc')
-  , closest = require('closest-num');
+  , closest = require('closest-num')
+  , percentage = require('percentage-calc');
 
 /**
  * Require main class.
@@ -1076,7 +1245,8 @@ module.exports = Horizontal;
 
 function Horizontal() {
   Powerange.apply(this, arguments);
-  this.initHorizontal();
+  if (this.options.step) this.step(this.slider.offsetWidth, this.handle.offsetWidth);
+  this.setStart(this.options.start);
 }
 
 /**
@@ -1160,17 +1330,6 @@ Horizontal.prototype.onmousemove = function(e) {
 Horizontal.prototype.onmouseup = function(e) {
   this.unselectable(this.slider, false);
 };
-
-/**
- * Initialize horizontal class.
- *
- * @api private
- */
-
-Horizontal.prototype.initHorizontal = function() {
-  if (this.options.step) this.step(this.slider.offsetWidth, this.handle.offsetWidth);
-  this.setStart(this.options.start);
-};
 });
 require.register("powerange/lib/vertical.js", function(exports, require, module){
 /**
@@ -1179,8 +1338,9 @@ require.register("powerange/lib/vertical.js", function(exports, require, module)
  */
 
 var inherits = require('super')
-  , percentage = require('percentage-calc')
-  , closest = require('closest-num');
+  , classes = require('classes')
+  , closest = require('closest-num')
+  , percentage = require('percentage-calc');
 
 /**
  * Require main class.
@@ -1202,7 +1362,9 @@ module.exports = Vertical;
 
 function Vertical() {
   Powerange.apply(this, arguments);
-  this.initVertical();
+  classes(this.slider).add('vertical');
+  if (this.options.step) this.step(this.slider.offsetHeight, this.handle.offsetHeight);
+  this.setStart(this.options.start);
 }
 
 /**
@@ -1238,16 +1400,6 @@ Vertical.prototype.setStart = function(start) {
 Vertical.prototype.setPosition = function(val) {
   this.handle.style.bottom = val + 'px';
   this.slider.querySelector('.range-quantity').style.height = val + 'px';
-};
-
-/**
- * Add additional class to vertical slider.
- *
- * @api private
- */
-
-Vertical.prototype.addClass = function() {
-  this.slider.className += ' vertical';
 };
 
 /**
@@ -1296,18 +1448,6 @@ Vertical.prototype.onmousemove = function(e) {
 Vertical.prototype.onmouseup = function(e) {
   this.unselectable(this.slider, false);
 };
-
-/**
- * Initialize vertical class.
- *
- * @api private
- */
-
-Vertical.prototype.initVertical = function() {
-  this.addClass();
-  if (this.options.step) this.step(this.slider.offsetHeight, this.handle.offsetHeight);
-  this.setStart(this.options.start);
-};
 });
 
 
@@ -1319,16 +1459,18 @@ Vertical.prototype.initVertical = function() {
 
 
 
+
+
+require.alias("component-classes/index.js", "powerange/deps/classes/index.js");
+require.alias("component-classes/index.js", "classes/index.js");
+require.alias("component-indexof/index.js", "component-classes/deps/indexof/index.js");
+
 require.alias("ui-component-mouse/index.js", "powerange/deps/mouse/index.js");
 require.alias("ui-component-mouse/index.js", "mouse/index.js");
 require.alias("component-emitter/index.js", "ui-component-mouse/deps/emitter/index.js");
 
 require.alias("component-event/index.js", "ui-component-mouse/deps/event/index.js");
 
-require.alias("vesln-super/lib/super.js", "powerange/deps/super/lib/super.js");
-require.alias("vesln-super/lib/super.js", "powerange/deps/super/index.js");
-require.alias("vesln-super/lib/super.js", "super/index.js");
-require.alias("vesln-super/lib/super.js", "vesln-super/index.js");
 require.alias("abpetkov-percentage-calc/percentage-calc.js", "powerange/deps/percentage-calc/percentage-calc.js");
 require.alias("abpetkov-percentage-calc/percentage-calc.js", "powerange/deps/percentage-calc/index.js");
 require.alias("abpetkov-percentage-calc/percentage-calc.js", "percentage-calc/index.js");
@@ -1337,6 +1479,10 @@ require.alias("abpetkov-closest-num/closest-num.js", "powerange/deps/closest-num
 require.alias("abpetkov-closest-num/closest-num.js", "powerange/deps/closest-num/index.js");
 require.alias("abpetkov-closest-num/closest-num.js", "closest-num/index.js");
 require.alias("abpetkov-closest-num/closest-num.js", "abpetkov-closest-num/index.js");
+require.alias("vesln-super/lib/super.js", "powerange/deps/super/lib/super.js");
+require.alias("vesln-super/lib/super.js", "powerange/deps/super/index.js");
+require.alias("vesln-super/lib/super.js", "super/index.js");
+require.alias("vesln-super/lib/super.js", "vesln-super/index.js");
 require.alias("powerange/lib/powerange.js", "powerange/index.js");if (typeof exports == "object") {
   module.exports = require("powerange");
 } else if (typeof define == "function" && define.amd) {
