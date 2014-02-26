@@ -1,4 +1,4 @@
-# Powerange WIP
+![Powerange](http://i.imgur.com/dzcmnWS.jpg)
 
 ## Description
 
@@ -7,6 +7,8 @@ Powerange is a range slider control, inspired heavily by iOS 7 and the "Power Ra
 A great cross-browser solution, supporting: Google Chrome, Mozilla Firefox 3.6+, Opera 12+, Safari 5+, Internet Explorer 8+
 
 Licensed under [The MIT License](http://opensource.org/licenses/MIT).
+
+![Preview](http://i.imgur.com/21gwF47.jpg)
 
 If you like this module and you're a fan of iOS 7 style UI widgets, check out [Switchery](https://github.com/abpetkov/switchery).
 
@@ -80,7 +82,7 @@ The width (for horizontal) or height (for vertical) of the slider, depends on th
 
 Play around with the `background-color` of `.range-bar` and `.range-quantity`, add a `background-image` to `.range-handle`, add some nice `background-image` to `.range-min` and `.range-max`, get use of the `hideRange` option and you may end up with something as fun as this:
 
-Poweranger slider image here...
+![Power Ranger Slider](http://i.imgur.com/U4LQTKC.png)
 
 The sky is the limit.
 
@@ -116,7 +118,7 @@ You can hide the min and max values, by using the `hideRange` option.
 var init = new Powerange(elem, { hideRange: true });
 ```
 
-No values slider images here...
+![Hidden values](http://i.imgur.com/TAw0O9e.png)
 
 ##### Disabled
 
@@ -128,7 +130,7 @@ var init = new Powerange(elem, { disable: true, disabledOpacity: 0.75 });
 
 You can still give it a value, by changing the `start` option.
 
-Disabled slider image here...
+![Disabled](http://i.imgur.com/AescVQ2.png)
 
 ##### Horizontal and vertical slider
 
@@ -176,7 +178,7 @@ function displayValue() {
 }
 ```
 
-Callback set value slider image here...
+![Callback](http://i.imgur.com/3nfj0r8.png)
 
 ##### Interacting with another elements
 
