@@ -140,6 +140,8 @@ The default Powerange slider is horizontal. However, you can make it vertical, b
 var init = new Powerange(elem, { vertical: true });
 ```
 
+![Vertical slider](http://i.imgur.com/JNMJQve.png)
+
 ##### Checking value
 
 Check the current value of the range slider, by looking at the value of the text input element.
