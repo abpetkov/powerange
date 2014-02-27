@@ -16,29 +16,53 @@
 }
 
 ::selection {
-  background: #fe6b95;
+  background: #95b7d4;
   color: #fff;
 }
 
 ::-moz-selection {
-  background: #fe6b95;
+  background: #95b7d4;
   color: #fff;
 }
 
-.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:before, .clearfix:after { content: ''; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { *zoom: 1; }
 
 body {
-  background: fixed url('') 0 0 no-repeat;
-  background-color: #e55da5\9;
-  background-size: cover;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 18px;
+  background: fixed url('images/background.jpg') 0 0 no-repeat;
+  background-color: #c4d6e7\9;
+  color: #5c5c5c;
+  font-family: 'News Cycle', Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 19px;
 
   -webkit-background-size: cover;
   -moz-background-size: cover;
+  background-size: cover;
+}
+
+h2 {
+  color: #3788ca;
+  font-family: 'Maven Pro';
+  font-size: 2em;
+  line-height: 1.2em;
+  margin-bottom: 10px;
+}
+
+a {
+  color: #4985b9;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0386f8;
+
+  -webkit-transition: color 0.25s ease-in;
+  -moz-transition: color 0.25s ease-in;
+  -o-transition: color 0.25s ease-in;
+  -ms-transition: color 0.25s ease-in;
+  transition: color 0.25s ease-in;
 }
 
 /**
@@ -47,3 +71,73 @@ body {
  *
  */
 
+.box {
+  background-color: #fff;
+  margin-bottom: 30px;
+  min-height: 75px;
+
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  margin: 0 auto;
+  width: 960px;
+}
+
+.content > .box {
+  padding: 20px;
+}
+
+/**
+ *
+ * Header.
+ *
+ */
+
+.header {
+  margin-top: 20px;
+  height: 75px;
+}
+
+.header > img {
+  float: left;
+  margin: 19px 0 0 20px;
+}
+
+.slogan {
+  color: #3788ca;
+  font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  float: right;
+  margin: 28px 20px 0 0;
+}
+
+/**
+ *
+ * Content.
+ *
+ */
+
+.content .box p {
+  margin-bottom: 10px;
+}
+
+.author {
+  margin: 0 0 30px -30px;
+}
+
+.author > span {
+  display: block;
+  margin: 0 0 15px 30px;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.author > a {
+  float: left;
+  margin: 0 0 0 30px;
+  min-height: 28px;
+  padding-top: 7px;
+  text-align: center;
+  width: 300px;
+}

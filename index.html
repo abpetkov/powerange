@@ -4,31 +4,47 @@
   <title>Powerange Example</title>
   <link rel="stylesheet" href="demo.css" />
   <link rel="stylesheet" href="dist/powerange.css" />
-  <style type="text/css">
-    .container {
-      height: 200px;
-      margin: 100px auto 0;
-      width: 200px;
-    }
-  </style>
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
   <div class="container">
-    <input type="text" class="js-default" />
-    <br />
-    <br />
-    <br />
-    <input type="text" class="js-vert" />
+
+    <header class="header box clearfix">
+      <img src="images/logo.png" alt="Powerange logo" />
+      <div class="slogan">iOS 7 style range slider</div>
+    </header>
+
+    <section class="author clearfix">
+      <span>Follow me:</span>
+      <a class="twitter box" href="https://twitter.com/abpetkov" target="_blank">@abpetkov</a>
+      <a class="github box" href="https://github.com/abpetkov" target="_blank">abpetkov</a>
+      <a class="dribbble box" href="http://dribbble.com/apetkov" target="_blank">apetkov</a>
+    </section>
+
+    <section class="content">
+
+      <div class="box">
+        <h2>About Powerange</h2>
+        <p>
+          Powerange is a range slider control, inspired heavily by iOS 7 and the "Power Rangers" TV series. It is easily customizable, both by CSS and JavaScript. With it's many features, including changing color and overall style, switching between horizontal and vertical style, custom min, max and start values, custom step interval, displaying decimal values, displaying icons instead of min/max numbers, it is a really powerful UI tool to use on your website.
+        </p>
+        <p>A great cross-browser solution, supporting: Google Chrome, Mozilla Firefox 3.6+, Opera 12+, Safari 5+, Internet Explorer 8+</p>
+        <p>Licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">The MIT License</a>.</p>
+      </div>
+
+    </section>
+
   </div>
+
+
+  <!-- <input type="text" class="js-default" /> -->
 
   <script src="dist/powerange.min.js"></script>
   <script type="text/javascript">
-    var def = document.querySelector('.js-default');
-    var initdef = new Powerange(def);
-
-    var vert = document.querySelector('.js-vert');
-    var initvert = new Powerange(vert, { vertical: true, step: 10, start: 77 });
+  var def = document.querySelector('.js-default');
+  var initdef = new Powerange(def);
   </script>
 </body>
 </html>
