@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Powerange Example</title>
+  <link rel="stylesheet" href="demo.css" />
+  <link rel="stylesheet" href="dist/powerange.css" />
+  <style type="text/css">
+    .container {
+      height: 200px;
+      margin: 100px auto 0;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <input type="text" class="js-default" />
+    <br />
+    <br />
+    <br />
+    <input type="text" class="js-vert" />
+  </div>
+
+  <script src="dist/powerange.min.js"></script>
+  <script type="text/javascript">
+    var def = document.querySelector('.js-default');
+    var initdef = new Powerange(def);
+
+    var vert = document.querySelector('.js-vert');
+    var initvert = new Powerange(vert, { vertical: true, step: 10, start: 77 });
+  </script>
+</body>
+</html>
