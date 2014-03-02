@@ -30,7 +30,7 @@
 .clearfix { *zoom: 1; }
 
 body {
-  background: fixed url('images/background.jpg') 0 0 no-repeat;
+  background: fixed url('../images/background.jpg') 0 0 no-repeat;
   background-color: #c4d6e7\9;
   color: #5c5c5c;
   font-family: 'News Cycle', Arial, Helvetica, sans-serif;
@@ -124,13 +124,15 @@ a:hover {
 }
 
 .author {
-  margin: 0 0 30px -30px;
+  margin-bottom: 30px;
 }
 
 .author > span {
-  display: block;
-  margin: 0 0 15px 30px;
+  float: left;
+  height: 28px;
+  padding-top: 7px;
   text-shadow: 0 1px 0 #fff;
+  width: 120px;
 }
 
 .author > a {
@@ -138,10 +140,8 @@ a:hover {
   float: left;
   margin: 0 0 0 30px;
   min-height: 28px;
-  padding-top: 7px;
-  text-align: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  padding: 7px 0 0 150px;
+  width: 100px;
 
   -webkit-transition: background-color 0.15s ease-in;
   -moz-transition: background-color 0.15s ease-in;
@@ -151,25 +151,25 @@ a:hover {
 }
 
 .twitter {
-  background-color: #2894e6;
+  background: #47a0e3 url('../images/icon_twitter.png') 10% 10% no-repeat;
 }
 
 .twitter:hover {
-  background-color: #4cacf5;
+  background-color: #55acee;
 }
 
 .github {
-  background-color: #333;
+  background: #333 url('../images/icon_github.png') 10% 30% no-repeat;
 }
 
 .github:hover {
-  background-color: #4b4b4b;
+  background-color: #404040;
 }
 
 .dribbble {
-  background-color: #e94d8b;
+  background: #ea4c89 url('../images/icon_dribbble.png') 10% 40% no-repeat;
 }
 
 .dribbble:hover {
-  background-color: #f568a0;
+  background-color: #f65a96;
 }
