@@ -44,9 +44,16 @@ body {
 
 h2 {
   color: #3788ca;
-  font-family: 'Maven Pro';
+  font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
   font-size: 2em;
   line-height: 1.2em;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
+  font-size: 1.4em;
+  line-height: 1.3em;
   margin-bottom: 10px;
 }
 
@@ -64,6 +71,14 @@ a:hover {
   -ms-transition: color 0.25s ease;
   transition: color 0.25s ease;
 }
+
+.note {
+  font-size: 0.85em;
+  font-style: italic;
+  line-height: 1em;
+}
+
+
 
 /**
  *
@@ -123,6 +138,10 @@ a:hover {
   margin-bottom: 10px;
 }
 
+.content .box p:last-child {
+  margin-bottom: 0;
+}
+
 .author {
   margin-bottom: 30px;
 }
@@ -172,4 +191,56 @@ a:hover {
 
 .dribbble:hover {
   background-color: #f65a96;
+}
+
+/**
+ *
+ * Code snippets.
+ *
+ */
+
+pre {
+  background-color: #141414;
+  font-family: 'Source Code Pro', Arial, Helvetica, sans-serif;
+  font-size: 0.84em;
+  margin: 20px 0 20px 3px;
+  overflow: auto;
+  padding: 10px;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+.script {
+  color: #fff;
+}
+
+.quote,
+.comment {
+  color: #5e5a60;
+}
+
+.name {
+  color: #9b6e31;
+}
+
+.specials {
+  color: #f9f094;
+}
+
+.tag,
+.attribute,
+.sign {
+  color: #e0c686;
+}
+
+.value {
+  color: #8e9e65;
+}
+
+.boolean {
+  color: #c96b4b;
+}
+
+.single {
+  color: #96849e;
 }
