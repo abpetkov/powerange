@@ -56,13 +56,13 @@ a {
 }
 
 a:hover {
-  color: #0386f8;
+  color: #58A1E0;
 
-  -webkit-transition: color 0.25s ease-in;
-  -moz-transition: color 0.25s ease-in;
-  -o-transition: color 0.25s ease-in;
-  -ms-transition: color 0.25s ease-in;
-  transition: color 0.25s ease-in;
+  -webkit-transition: color 0.25s ease;
+  -moz-transition: color 0.25s ease;
+  -o-transition: color 0.25s ease;
+  -ms-transition: color 0.25s ease;
+  transition: color 0.25s ease;
 }
 
 /**
