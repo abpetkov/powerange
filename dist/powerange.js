@@ -619,7 +619,7 @@ module.exports = function(el, obj){
 
 /**
  * initialize new `Mouse`.
- * 
+ *
  * @param {Element} el
  * @param {Object} obj
  */
@@ -637,7 +637,7 @@ emitter(Mouse.prototype);
 
 /**
  * bind mouse.
- * 
+ *
  * @return {Mouse}
  */
 
@@ -675,7 +675,7 @@ Mouse.prototype.bind = function(){
 
 /**
  * unbind mouse.
- * 
+ *
  * @return {Mouse}
  */
 
@@ -923,6 +923,7 @@ var defaults = {
   , disable: false
   , disableOpacity: 0.5
   , hideRange: false
+  , klass: ''
   , min: 0
   , max: 100
   , start: null
@@ -1084,6 +1085,17 @@ Powerange.prototype.insertAfter = function(reference, target) {
 };
 
 /**
+ * Add an additional class for extra customization.
+ *
+ * @param {String} klass
+ * @api private
+ */
+
+Powerange.prototype.extraClass = function(klass) {
+  if (this.options.klass) classes(this.slider).add(klass);
+};
+
+/**
  * Set min and max values.
  *
  * @param {Number} min
@@ -1209,6 +1221,7 @@ Powerange.prototype.changeEvent = function(state) {
 Powerange.prototype.init = function() {
   this.hide();
   this.append();
+  this.extraClass(this.options.klass);
   this.bindEvents();
   this.checkValues(this.options.start);
   this.setRange(this.options.min, this.options.max);
@@ -1486,7 +1499,7 @@ require.alias("vesln-super/lib/super.js", "vesln-super/index.js");
 require.alias("powerange/lib/powerange.js", "powerange/index.js");if (typeof exports == "object") {
   module.exports = require("powerange");
 } else if (typeof define == "function" && define.amd) {
-  define(function(){ return require("powerange"); });
+  define([], function(){ return require("powerange"); });
 } else {
   this["Powerange"] = require("powerange");
 }})();
