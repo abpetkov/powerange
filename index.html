@@ -172,7 +172,9 @@
           </pre>
 
           <div class="slider-wrapper">
-            <!-- decimal slider here -->
+            <input type="text" class="js-decimal" />
+            <label class="display-box-label">Value:</label>
+            <div id="js-display-decimal" class="display-box"></div>
           </div>
         </div>
 
@@ -216,6 +218,12 @@
     var initVals = new Powerange(vals, { min: 16, max: 256, start: 128 });
 
     // Decimal
+    var dec = document.querySelector('.js-decimal');
+    var initDec = new Powerange(dec, { decimal: true, callback: displayDecimalValue, max: 50, start: 19.12 });
+
+    function displayDecimalValue() {
+      document.getElementById('js-display-decimal').innerHTML = dec.value;
+    }
 
     // Callback
     var clbk = document.querySelector('.js-callback');
