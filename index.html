@@ -175,6 +175,29 @@
             <!-- decimal slider here -->
           </div>
         </div>
+
+        <div class="example">
+          <h3>Callback</h3>
+
+          <p>The callback function is invoked on slider initialization and on slider handle movement. It's very appropriate for displaying the current value in another element.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> elem <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-range'</span>);</div>
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem);</div>
+              <br />
+              <div><span class="specials">function</span> <span class="name">displayValue</span>() {</div>
+                <div>&nbsp;&nbsp;<span class="single">document</span>.<span class="specials">getElementById</span>(<span class="value">'display-box'</span>).innerHTML = elem.<span class="boolean">value</span>;</div>
+              <div>}</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-callback" />
+            <label class="display-box-label">Value:</label>
+            <div id="js-display-callback" class="display-box"></div>
+          </div>
+        </div>
       </div>
 
     </section>
@@ -191,6 +214,16 @@
     // Min, max, start
     var vals = document.querySelector('.js-min-max-start');
     var initVals = new Powerange(vals, { min: 16, max: 256, start: 128 });
+
+    // Decimal
+
+    // Callback
+    var clbk = document.querySelector('.js-callback');
+    var initClbk = new Powerange(clbk, { callback: displayValue, start: 88 });
+
+    function displayValue() {
+      document.getElementById('js-display-callback').innerHTML = clbk.value;
+    }
 
   </script>
 </body>
