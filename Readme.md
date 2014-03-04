@@ -67,7 +67,7 @@ defaults = {
 - `disable` : enable or disable slider
 - `disableOpacity` : opacity of the disabled slider
 - `hideRange` : show or hide min and max range values
-- `klas` : additional class for the slider wrapper for extra customization
+- `klass` : additional class for the slider wrapper for extra customization
 - `min` : minimum range value
 - `max` : maximum range value
 - `start` : starting value
