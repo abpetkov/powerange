@@ -77,7 +77,7 @@
         <pre>
           <div class="script">
             <div><span class="specials">var</span> elem <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-switch'</span>);</div>
-            <div><span class="specials">var</span> init <span class="sign">=</span> <span class="single">new</span> <span class="name">Switchery</span>(elem);</div>
+            <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Switchery</span>(elem);</div>
           </div>
         </pre>
 
@@ -123,26 +123,75 @@
         </ul>
       </div>
 
+      <div class="box">
+        <h2>Examples</h2>
+
+        <div class="example">
+          <h3>Basic style customization</h3>
+
+          <p>You are free to customize the range slider as much as you wish, using only CSS.</p>
+
+          <p>The width (for horizontal) or height (for vertical) of the slider, depends on the container in which it's placed and take 100%.</p>
+
+          <p>Play around with the <strong>background-color</strong> of <strong>.range-bar</strong> and <strong>.range-quantity</strong>, add a <strong>background-image</strong> to <strong>.range-handle</strong>, add some nice <strong>background-image</strong> to <strong>.range-min</strong> and <strong>.range-max</strong>, get use of the <strong>hideRange</strong> option and you may end up with something as fun as this:</p>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-customized" />
+          </div>
+
+          <p>The sky is the limit.</p>
+
+          <p class="note">Hint: Use the <strong>klass</strong> option to add an additional class to the slider and apply different style to it</p>
+        </div>
+
+        <div class="example">
+          <h3>Minimum, maximum and start values</h3>
+
+          <p>Changing your default <strong>min</strong>, <strong>max</strong> and <strong>start</strong> values is pretty easy. The start value has to be a number in your min-max interval, otherwise it takes the value of either <strong>min</strong> or <strong>max</strong>, depending on which is closer. Negative values are supported as well.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { min: <span class="boolean">16</span>, max: <span class="boolean">256</span>, start: <span class="boolean">128</span> });</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-min-max-start" />
+          </div>
+        </div>
+
+        <div class="example">
+          <h3>Decimal</h3>
+
+          <p>Display decimal number with 2 characters after the decimal point.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { decimal: <span class="boolean">true</span> });</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <!-- decimal slider here -->
+          </div>
+        </div>
+      </div>
+
     </section>
 
   </div>
 
-  <!-- <pre>
-    <div class="script">
-      <div><span class="specials">var</span> elems <span class="sign">=</span> <span class="single">Array</span>.<span class="boolean">prototype</span>.slice.<span class="specials">call</span>(<span class="single">document</span>.querySelectorAll('<span class="value">.js-switch</span>'));</div>
-      <br />
-      <div>elems.forEach(<span class="specials">function</span>(html) {</div>
-      <div>&nbsp;&nbsp;<span class="specials">var</span> switchery = <span class="sign">new</span> <span class="name">Switchery</span>(html);</div>
-      <div>});</div>
-    </div>
-  </pre> -->
-
-  <!-- <input type="text" class="js-default" /> -->
-
   <script src="dist/powerange.min.js"></script>
   <script type="text/javascript">
-  var def = document.querySelector('.js-default');
-  var initdef = new Powerange(def);
+
+    // Basic customization
+    var cust = document.querySelector('.js-customized');
+    var initCust = new Powerange(cust, { hideRange: true, klass: 'power-ranger', start: 60 });
+
+    // Min, max, start
+    var vals = document.querySelector('.js-min-max-start');
+    var initVals = new Powerange(vals, { min: 16, max: 256, start: 128 });
+
   </script>
 </body>
 </html>

@@ -134,6 +134,15 @@ a:hover {
  *
  */
 
+.slider-wrapper {
+  margin: 50px 0 50px 30px;
+  width: 250px;
+}
+
+.content strong {
+  color: #000;
+}
+
 .content .box p {
   margin-bottom: 10px;
 }
@@ -225,6 +234,22 @@ a:hover {
   margin-bottom: 0;
 }
 
+.example {
+  border-bottom: 1px solid #deecf5;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.example:last-child {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.example:last-child .slider-wrapper {
+  margin-bottom: 15px;
+}
+
 /**
  *
  * Code snippets.
@@ -275,4 +300,39 @@ pre {
 
 .single {
   color: #96849e;
+}
+
+/**
+ *
+ * Custom slider.
+ *
+ */
+
+.range-min,
+.range-max {
+  padding-top: 1px !important;
+}
+
+.range-bar.power-ranger {
+  background-color: #6b6b6b;
+}
+
+.power-ranger .range-quantity {
+  background-color: #e52027;
+}
+
+.power-ranger .range-handle {
+  background: url('../images/power_ranger.png') 0 0 no-repeat;
+  border-radius: 0;
+
+  -webkitbox-shadow: 0 0 0;
+  box-shadow: 0 0 0;
+}
+
+.power-ranger .range-min {
+  background: url('../images/heart_broken.png') 0 0 no-repeat;
+}
+
+.power-ranger .range-max {
+  background: url('../images/heart.png') 0 0 no-repeat;
 }
