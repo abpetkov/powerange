@@ -195,6 +195,22 @@
         </div>
 
         <div class="example">
+          <h3>Hide range values</h3>
+
+          <p>You can hide the min and max values, by using the <strong>hideRange</strong> option.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { hideRange: <span class="boolean">true</span> });</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-hiderange" />
+          </div>
+        </div>
+
+        <div class="example">
           <h3>Callback</h3>
 
           <p>The callback function is invoked on slider initialization and on slider handle movement. It's very appropriate for displaying the current value in another element.</p>
@@ -225,15 +241,15 @@
   <script src="dist/powerange.min.js"></script>
   <script type="text/javascript">
 
-    // Basic customization
+    // Basic customization.
     var cust = document.querySelector('.js-customized');
     var initCust = new Powerange(cust, { hideRange: true, klass: 'power-ranger', start: 60 });
 
-    // Min, max, start
+    // Min, max, start.
     var vals = document.querySelector('.js-min-max-start');
     var initVals = new Powerange(vals, { min: 16, max: 256, start: 128 });
 
-    // Decimal
+    // Decimal.
     var dec = document.querySelector('.js-decimal');
     var initDec = new Powerange(dec, { decimal: true, callback: displayDecimalValue, max: 50, start: 19.12 });
 
@@ -241,11 +257,15 @@
       document.getElementById('js-display-decimal').innerHTML = dec.value;
     }
 
-    // Step
+    // Step.
     var stp = document.querySelector('.js-step');
     var initStp = new Powerange(stp, { start: 50, step: 10 });
 
-    // Callback
+    // Hide range.
+    var hide = document.querySelector('.js-hiderange');
+    var initHideRange = new Powerange(hide, { hideRange: true, start: 70 });
+
+    // Callback.
     var clbk = document.querySelector('.js-callback');
     var initClbk = new Powerange(clbk, { callback: displayValue, start: 88 });
 
