@@ -53,6 +53,7 @@ defaults = {
   , disable       : false
   , disableOpacity: 0.5
   , hideRange     : false
+  , klass         : ''
   , min           : 0
   , max           : 100
   , start         : null
@@ -66,6 +67,7 @@ defaults = {
 - `disable` : enable or disable slider
 - `disableOpacity` : opacity of the disabled slider
 - `hideRange` : show or hide min and max range values
+- `klas` : additional class for the slider wrapper for extra customization
 - `min` : minimum range value
 - `max` : maximum range value
 - `start` : starting value
@@ -85,6 +87,8 @@ Play around with the `background-color` of `.range-bar` and `.range-quantity`, a
 ![Power Ranger Slider](http://i.imgur.com/U4LQTKC.png)
 
 The sky is the limit.
+
+*Hint: Use the `klass` option to add an additional class to the slider and apply different style to it
 
 ##### Minimum, maximum and start values
 
