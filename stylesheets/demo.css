@@ -140,6 +140,11 @@ a:hover {
   width: 250px;
 }
 
+.vertical-wrapper {
+  height: 200px;
+  width: auto;
+}
+
 .content strong {
   color: #000;
 }

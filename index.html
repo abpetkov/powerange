@@ -211,6 +211,38 @@
         </div>
 
         <div class="example">
+          <h3>Disabled</h3>
+
+          <p>Disable the range slider and change it's default <strong>disabledOpacity</strong> if needeed.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { disable: <span class="boolean">true</span>, disabledOpacity: <span class="boolean">0.75</span> });</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-disabled" />
+          </div>
+        </div>
+
+        <div class="example">
+          <h3>Horizontal and vertical slider</h3>
+
+          <p>The default Powerange slider is horizontal. However, you can make it vertical, by setting <strong>vertical: true</strong>.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { vertical: <span class="boolean">true</span> });</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper vertical-wrapper">
+            <input type="text" class="js-vertical" />
+          </div>
+        </div>
+
+        <div class="example">
           <h3>Callback</h3>
 
           <p>The callback function is invoked on slider initialization and on slider handle movement. It's very appropriate for displaying the current value in another element.</p>
@@ -264,6 +296,14 @@
     // Hide range.
     var hide = document.querySelector('.js-hiderange');
     var initHideRange = new Powerange(hide, { hideRange: true, start: 70 });
+
+    // Disabled.
+    var disabled = document.querySelector('.js-disabled');
+    var initDisabled = new Powerange(disabled, { disable: true, disabledOpacity: 0.75, start: 30 });
+
+    // Vertical.
+    var vert = document.querySelector('.js-vertical');
+    var initVert = new Powerange(vert, { start: 80, vertical: true });
 
     // Callback.
     var clbk = document.querySelector('.js-callback');
