@@ -179,6 +179,22 @@
         </div>
 
         <div class="example">
+          <h3>Slider step</h3>
+
+          <p>You can change the step with which the handle moves, using the <strong>step</strong> option.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { step: <span class="boolean">10</span> });</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-step" />
+          </div>
+        </div>
+
+        <div class="example">
           <h3>Callback</h3>
 
           <p>The callback function is invoked on slider initialization and on slider handle movement. It's very appropriate for displaying the current value in another element.</p>
@@ -224,6 +240,10 @@
     function displayDecimalValue() {
       document.getElementById('js-display-decimal').innerHTML = dec.value;
     }
+
+    // Step
+    var stp = document.querySelector('.js-step');
+    var initStp = new Powerange(stp, { start: 50, step: 10 });
 
     // Callback
     var clbk = document.querySelector('.js-callback');
