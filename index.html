@@ -76,14 +76,49 @@
 
         <pre>
           <div class="script">
-            <div><span class="specials">var</span> elem = <span class="single">document</span>.querySelector(<span class="value">'.js-switch'</span>);</div>
-            <div><span class="specials">var</span> init = <span class="single">new</span> <span class="name">Switchery</span>(elem);</div>
+            <div><span class="specials">var</span> elem <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-switch'</span>);</div>
+            <div><span class="specials">var</span> init <span class="sign">=</span> <span class="single">new</span> <span class="name">Switchery</span>(elem);</div>
           </div>
         </pre>
 
         <p>Use the above for the standalone version.</p>
 
         <p class="note">NOTE: your element must be a text input</p>
+      </div>
+
+      <div class="box">
+        <h2>Settings and Defaults</h2>
+
+        <pre>
+          <div class="script">
+            <div>defaults <span class="sign">=</span> {</div>
+              <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="name">callback</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="specials">function</span>() {}</div>
+              <div>&nbsp;&nbsp;, decimal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">false</span></div>
+              <div>&nbsp;&nbsp;, disable &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">false</span></div>
+              <div>&nbsp;&nbsp;, disableOpacity: <span class="boolean">0.5</span></div>
+              <div>&nbsp;&nbsp;, hideRange &nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">false</span></div>
+              <div>&nbsp;&nbsp;, min &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">0</span></div>
+              <div>&nbsp;&nbsp;, max &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">100</span></div>
+              <div>&nbsp;&nbsp;, start &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">null</span></div>
+              <div>&nbsp;&nbsp;, step &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">null</span></div>
+              <div>&nbsp;&nbsp;, vertical &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="boolean">false</span></div>
+
+            <div>};</div>
+          </div>
+        </pre>
+
+        <ul class="section-list">
+          <li><div>callback</div> - <p>function invoked on initialization and on slider handle movement</p></li>
+          <li><div>decimal</div> - <p>display decimal number</p></li>
+          <li><div>disable</div> - <p>enable or disable slider</p></li>
+          <li><div>disableOpacity</div> - <p>opacity of the disabled slider</p></li>
+          <li><div>hideRange</div> - <p>show or hide min and max range values</p></li>
+          <li><div>min</div> - <p>minimum range value</p></li>
+          <li><div>max</div> - <p>maximum range value</p></li>
+          <li><div>start</div> - <p>starting value</p></li>
+          <li><div>step</div> - <p>step of the handle</p></li>
+          <li><div>vertical</div> - <p>toggle between horizontal or vertical slider</p></li>
+        </ul>
       </div>
 
     </section>

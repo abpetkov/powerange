@@ -193,6 +193,38 @@ a:hover {
   background-color: #f65a96;
 }
 
+.section-list {
+  margin-left: 8px;
+}
+
+.section-list li {
+  list-style: none;
+  margin-bottom: 12px;
+}
+
+.section-list li div {
+  background-color: #3788ca;
+  color: #fff;
+  display: inline-block;
+  padding: 1px 8px 4px;
+
+  -webkit-transform: skewX(-15deg);
+  -ms-transform: skewX(-15deg);
+  transform: skewX(-15deg);
+}
+
+.section-list li p {
+  display: inline-block;
+}
+
+.section-list li span {
+  font-style: italic;
+}
+
+.section-list li:last-child {
+  margin-bottom: 0;
+}
+
 /**
  *
  * Code snippets.
