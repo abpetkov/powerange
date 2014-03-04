@@ -278,6 +278,25 @@ a:hover {
   width: 50px;
 }
 
+.small-button {
+  background-color: #3788ca;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  height: 25px;
+  width: 90px;
+}
+
+.small-button:focus {
+  outline: 0;
+}
+
+.slider-wrapper .small-button {
+  right: -140px;
+  position: absolute;
+  top: -10px;
+}
+
 /**
  *
  * Code snippets.

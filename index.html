@@ -243,6 +243,49 @@
         </div>
 
         <div class="example">
+          <h3>Checking state</h3>
+
+          <p>Check the current value of the range slider, by looking at the value of the text input element.</p>
+
+          <p>On click:</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> clickInput <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-check-click'</span>)</div>
+              <div>&nbsp;&nbsp;, clickButton <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-check-click-button'</span>)</div>
+              <br />
+              <div>clickButton.addEventListener(<span class="value">'click'</span>, <span class="specials">function</span>() {</div>
+              <div>&nbsp;&nbsp;<span class="single">alert</span>(clickInput.<span class="boolean">value</span>);</div>
+              <div>});</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-check-click" />
+            <button class="js-check-click-button small-button">Check state</button>
+          </div>
+
+          <p>On change:</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> changeInput <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-check-change'</span>);</div>
+              <br />
+              <div><span class="single">changeInput</span>.<span class="name">onchange</span> = <span class="specials">function</span>() {</div>
+              <div>&nbsp;&nbsp;<span class="single">document</span>.<span class="specials">getElementById</span>(<span class="value">'js-display-change'</span>).innerHTML = changeInput.<span class="boolean">value</span>;</div>
+              <div>});</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-check-change" />
+            <label class="display-box-label">Value:</label>
+            <div id="js-display-change" class="display-box"></div>
+          </div>
+
+        </div>
+
+        <div class="example">
           <h3>Callback</h3>
 
           <p>The callback function is invoked on slider initialization and on slider handle movement. It's very appropriate for displaying the current value in another element.</p>
@@ -304,6 +347,24 @@
     // Vertical.
     var vert = document.querySelector('.js-vertical');
     var initVert = new Powerange(vert, { start: 80, vertical: true });
+
+    // Checking state.
+    // On click.
+    var clickInput = document.querySelector('.js-check-click')
+      , clickButton = document.querySelector('.js-check-click-button')
+      , initClickInput = new Powerange(clickInput, { start: 20 });
+
+    clickButton.addEventListener('click', function() {
+      alert(clickInput.value);
+    });
+
+    // On change.
+    var changeInput = document.querySelector('.js-check-change')
+      , initChangeInput = new Powerange(changeInput, { start: 70 });
+
+    changeInput.onchange = function() {
+      document.getElementById('js-display-change').innerHTML = changeInput.value;
+    };
 
     // Callback.
     var clbk = document.querySelector('.js-callback');
