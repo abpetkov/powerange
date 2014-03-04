@@ -88,7 +88,7 @@ Play around with the `background-color` of `.range-bar` and `.range-quantity`, a
 
 The sky is the limit.
 
-*Hint: Use the `klass` option to add an additional class to the slider and apply different style to it
+*Hint: Use the `klass` option to add an additional class to the slider and apply different style to it*
 
 ##### Minimum, maximum and start values
 
