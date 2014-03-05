@@ -7,6 +7,11 @@
   <link href='http://fonts.googleapis.com/css?family=Maven+Pro:400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+  <!--[if lt IE 9]>
+      <script src="html5.js"></script>
+      <script src="PIE.js"></script>
+    <![endif]-->
 </head>
 <body>
 
@@ -442,6 +447,19 @@
 
     function setOpacity() {
       document.querySelector('.js-change-opacity').style.opacity = opct.value;
+    }
+
+    // CSS3 Pie for <IE9
+    if (window.PIE) {
+      var wrapper = document.querySelectorAll('.range-bar')
+        , handle = document.querySelectorAll('.range-handle');
+
+      if (wrapper.length == handle.length) {
+        for (var i = 0; i < wrapper.length; i++) {
+          PIE.attach(wrapper[i]);
+          PIE.attach(handle[i]);
+        }
+      }
     }
 
   </script>
