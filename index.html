@@ -273,7 +273,7 @@
               <br />
               <div><span class="single">changeInput</span>.<span class="name">onchange</span> = <span class="specials">function</span>() {</div>
               <div>&nbsp;&nbsp;<span class="single">document</span>.<span class="specials">getElementById</span>(<span class="value">'js-display-change'</span>).innerHTML = changeInput.<span class="boolean">value</span>;</div>
-              <div>});</div>
+              <div>};</div>
             </div>
           </pre>
 
@@ -306,6 +306,27 @@
             <label class="display-box-label">Value:</label>
             <div id="js-display-callback" class="display-box"></div>
           </div>
+        </div>
+
+        <div class="example">
+        <h3>Interacting with another elements</h3>
+
+        <p>Just a simple example of how you can interact with an element, when changing the slider value. In this case, we change the opacity of an awesome power ranger mask.</p>
+
+        <pre>
+          <div class="script">
+            <div><span class="specials">var</span> elem <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-range'</span>);</div>
+            <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { callback: setOpacity, decimal: <span class="boolean">true</span>, min: <span class="boolean">0</span>, max: <span class="boolean">1</span>, start: <span class="boolean">1</span> });</div>
+            <br />
+            <div><span class="specials">function</span> <span class="name">setOpacity</span>() {</div>
+              <div>&nbsp;&nbsp;<span class="single">document</span>.querySelector(<span class="value">'.js-change-opacity'</span>).<span class="boolean">style</span>.opacity = elem.<span class="boolean">value</span>;</div>
+            <div>}</div>
+          </div>
+        </pre>
+
+        <div class="slider-wrapper">
+          <input type="text" class="js-opacity" />
+          <div class="powerranger js-change-opacity"></div>
         </div>
       </div>
 
@@ -378,6 +399,14 @@
 
     function displayValue() {
       document.getElementById('js-display-callback').innerHTML = clbk.value;
+    }
+
+    // Interacting with elements.
+    var opct = document.querySelector('.js-opacity');
+    var initOpct = new Powerange(opct, { callback: setOpacity, decimal: true, min: 0, max: 1, start: 1 });
+
+    function setOpacity() {
+      document.querySelector('.js-change-opacity').style.opacity = opct.value;
     }
 
   </script>

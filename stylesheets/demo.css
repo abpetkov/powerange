@@ -297,6 +297,16 @@ a:hover {
   top: -10px;
 }
 
+.powerranger {
+  background: url('../images/power_ranger_gold.png') 0 0 no-repeat;
+  height: 50px;
+  right: -100px;
+  opacity: 0;
+  position: absolute;
+  top: -25px;
+  width: 41px;
+}
+
 /**
  *
  * Code snippets.
