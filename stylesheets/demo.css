@@ -184,27 +184,27 @@ a:hover {
   transition: background-color 0.15s ease-in;
 }
 
-.twitter {
+.author .twitter {
   background: #47a0e3 url('../images/icon_twitter.png') 10% 10% no-repeat;
 }
 
-.twitter:hover {
+.author .twitter:hover {
   background-color: #55acee;
 }
 
-.github {
+.author .github {
   background: #333 url('../images/icon_github.png') 10% 30% no-repeat;
 }
 
-.github:hover {
+.author .github:hover {
   background-color: #404040;
 }
 
-.dribbble {
+.author .dribbble {
   background: #ea4c89 url('../images/icon_dribbble.png') 10% 40% no-repeat;
 }
 
-.dribbble:hover {
+.author .dribbble:hover {
   background-color: #f65a96;
 }
 
@@ -305,6 +305,70 @@ a:hover {
   position: absolute;
   top: -25px;
   width: 41px;
+}
+
+/**
+ *
+ * Footer.
+ *
+ */
+
+.footer {
+  height: 75px;
+  margin: 0 auto 100px;
+}
+
+.footer .left {
+  float: left;
+  padding: 15px 0 0 20px;
+  width: 330px;
+}
+
+.footer .left ul {
+  color: #4985b9;
+  font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
+  list-style: none;
+}
+
+.footer .left ul li {
+  display: inline;
+  margin: 0 10px 0 10px;
+}
+
+.footer .left ul li:first-child {
+  margin-left: 0;
+}
+
+.footer .right {
+  float: right;
+  padding: 15px 20px 0 0;
+  text-align: right;
+  width: 580px;
+}
+
+.footer .right a {
+  background-image: url('../images/icons_social.png');
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 20px;
+  margin-left: 15px;
+  padding-left: 30px;
+}
+
+.footer .twitter {
+  background-position: 0 0;
+}
+
+.footer .github {
+  background-position: 0 -20px;
+}
+
+.footer .dribbble {
+  background-position: 0 -40px;
+}
+
+.copyright {
+  margin-top: 10px;
 }
 
 /**
