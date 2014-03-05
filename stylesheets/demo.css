@@ -445,6 +445,7 @@ pre {
 .power-ranger .range-handle {
   background: url('../images/power_ranger.png') 0 0 no-repeat;
   border-radius: 0;
+  width: 25px;
 
   -webkitbox-shadow: 0 0 0;
   box-shadow: 0 0 0;
