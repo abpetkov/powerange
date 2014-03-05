@@ -1221,7 +1221,7 @@ Powerange.prototype.changeEvent = function(state) {
  */
 
 Powerange.prototype.init = function() {
-  // this.hide();
+  this.hide();
   this.append();
   this.bindEvents();
   this.extraClass(this.options.klass);
