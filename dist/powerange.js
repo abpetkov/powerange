@@ -1120,13 +1120,15 @@ Powerange.prototype.setRange = function(min, max) {
 
 Powerange.prototype.setValue = function (offset, size) {
   var part = percentage.from(parseFloat(offset), size)
-    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
+    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min
+    , changed = false;
 
   value = (this.options.decimal) ? (Math.round(value * 100) / 100) : Math.round(value);
+  changed = (this.element.value != value) ? true : false;
 
   this.element.value = value;
   this.options.callback();
-  this.changeEvent();
+  if (changed) this.changeEvent();
 };
 
 /**
@@ -1221,8 +1223,8 @@ Powerange.prototype.changeEvent = function(state) {
 Powerange.prototype.init = function() {
   this.hide();
   this.append();
-  this.extraClass(this.options.klass);
   this.bindEvents();
+  this.extraClass(this.options.klass);
   this.checkValues(this.options.start);
   this.setRange(this.options.min, this.options.max);
   this.disable();
