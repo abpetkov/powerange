@@ -309,25 +309,60 @@
         </div>
 
         <div class="example">
-        <h3>Interacting with another elements</h3>
+          <h3>Interacting with another elements</h3>
 
-        <p>Just a simple example of how you can interact with an element, when changing the slider value. In this case, we change the opacity of an awesome power ranger mask.</p>
+          <p>Just a simple example of how you can interact with an element, when changing the slider value. In this case, we change the opacity of an awesome power ranger mask.</p>
+
+          <pre>
+            <div class="script">
+              <div><span class="specials">var</span> elem <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-range'</span>);</div>
+              <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { callback: setOpacity, decimal: <span class="boolean">true</span>, min: <span class="boolean">0</span>, max: <span class="boolean">1</span>, start: <span class="boolean">1</span> });</div>
+              <br />
+              <div><span class="specials">function</span> <span class="name">setOpacity</span>() {</div>
+                <div>&nbsp;&nbsp;<span class="single">document</span>.querySelector(<span class="value">'.js-change-opacity'</span>).<span class="boolean">style</span>.opacity = elem.<span class="boolean">value</span>;</div>
+              <div>}</div>
+            </div>
+          </pre>
+
+          <div class="slider-wrapper">
+            <input type="text" class="js-opacity" />
+            <div class="powerranger js-change-opacity"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="box">
+        <h2>Development</h2>
+
+        <p>If you've decided to go in development mode and tweak this module, there are few things you should do.</p>
+
+        <p>Make your own build files, by using <a href="http://gruntjs.com/" trget="_blank">Grunt</a> command:</p>
 
         <pre>
           <div class="script">
-            <div><span class="specials">var</span> elem <span class="sign">=</span> <span class="single">document</span>.querySelector(<span class="value">'.js-range'</span>);</div>
-            <div><span class="specials">var</span> init <span class="sign">=</span> <span class="sign">new</span> <span class="name">Powerange</span>(elem, { callback: setOpacity, decimal: <span class="boolean">true</span>, min: <span class="boolean">0</span>, max: <span class="boolean">1</span>, start: <span class="boolean">1</span> });</div>
-            <br />
-            <div><span class="specials">function</span> <span class="name">setOpacity</span>() {</div>
-              <div>&nbsp;&nbsp;<span class="single">document</span>.querySelector(<span class="value">'.js-change-opacity'</span>).<span class="boolean">style</span>.opacity = elem.<span class="boolean">value</span>;</div>
-            <div>}</div>
+            $ grunt build
           </div>
         </pre>
 
-        <div class="slider-wrapper">
-          <input type="text" class="js-opacity" />
-          <div class="powerranger js-change-opacity"></div>
-        </div>
+        <p>Add the following code before the initialization:</p>
+
+        <pre>
+          <div class="script">
+            <span class="specials">var</span> Powerange <span class="sign">=</span> require(<span class="value">'powerange'</span>);
+          </div>
+        </pre>
+
+        <p>Make sure you're using the <strong>build/build.js</strong> and <strong>build/build.css</strong> files and you're ready.</p>
+
+        <p>There are some useful commands you can use:</p>
+
+        <ul class="section-list">
+          <li><div>$ grunt watch</div> - <p>watches for changes in the CSS and JS files in lib/ and updates the build files</p></li>
+          <li><div>$ grunt componentbuild</div> - <p>updates the files in <strong>build/</strong></p></li>
+          <li><div>$ grunt uglify</div> - <p>makes new JS standalone files</p></li>
+          <li><div>$ grunt cssmin</div> - <p>makes new CSS standalone files</p></li>
+          <li><div>$ grunt clean</div> - <p>empties the contents of <strong>build/</strong> and <strong>dist/</strong> folders</p></li>
+        </ul>
       </div>
 
     </section>
