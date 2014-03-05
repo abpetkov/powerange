@@ -1121,14 +1121,14 @@ Powerange.prototype.setRange = function(min, max) {
 Powerange.prototype.setValue = function (offset, size) {
   var part = percentage.from(parseFloat(offset), size)
     , value = percentage.of(part, this.options.max - this.options.min) + this.options.min
-    , flag = false;
+    , changed = false;
 
   value = (this.options.decimal) ? (Math.round(value * 100) / 100) : Math.round(value);
-  flag = (this.element.value != value) ? true : false;
+  changed = (this.element.value != value) ? true : false;
 
   this.element.value = value;
   this.options.callback();
-  if (flag) this.changeEvent();
+  if (changed) this.changeEvent();
 };
 
 /**
@@ -1501,7 +1501,7 @@ require.alias("vesln-super/lib/super.js", "vesln-super/index.js");
 require.alias("powerange/lib/powerange.js", "powerange/index.js");if (typeof exports == "object") {
   module.exports = require("powerange");
 } else if (typeof define == "function" && define.amd) {
-  define(function(){ return require("powerange"); });
+  define([], function(){ return require("powerange"); });
 } else {
   this["Powerange"] = require("powerange");
 }})();
