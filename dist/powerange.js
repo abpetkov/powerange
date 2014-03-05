@@ -1120,13 +1120,15 @@ Powerange.prototype.setRange = function(min, max) {
 
 Powerange.prototype.setValue = function (offset, size) {
   var part = percentage.from(parseFloat(offset), size)
-    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min;
+    , value = percentage.of(part, this.options.max - this.options.min) + this.options.min
+    , flag = false;
 
   value = (this.options.decimal) ? (Math.round(value * 100) / 100) : Math.round(value);
+  flag = (this.element.value != value) ? true : false;
 
   this.element.value = value;
   this.options.callback();
-  this.changeEvent();
+  if (flag) this.changeEvent();
 };
 
 /**
@@ -1219,10 +1221,10 @@ Powerange.prototype.changeEvent = function(state) {
  */
 
 Powerange.prototype.init = function() {
-  this.hide();
+  // this.hide();
   this.append();
-  this.extraClass(this.options.klass);
   this.bindEvents();
+  this.extraClass(this.options.klass);
   this.checkValues(this.options.start);
   this.setRange(this.options.min, this.options.max);
   this.disable();
@@ -1499,7 +1501,7 @@ require.alias("vesln-super/lib/super.js", "vesln-super/index.js");
 require.alias("powerange/lib/powerange.js", "powerange/index.js");if (typeof exports == "object") {
   module.exports = require("powerange");
 } else if (typeof define == "function" && define.amd) {
-  define([], function(){ return require("powerange"); });
+  define(function(){ return require("powerange"); });
 } else {
   this["Powerange"] = require("powerange");
 }})();
