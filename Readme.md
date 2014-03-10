@@ -4,7 +4,7 @@
 
 Powerange is a range slider control, inspired heavily by iOS 7 and the "Power Rangers" TV series. It is easily customizable, both by CSS and JavaScript. With it's many features, including changing color and overall style, switching between horizontal and vertical style, custom min, max and start values, custom step interval, displaying decimal values, displaying icons instead of min/max numbers, it is a really powerful UI tool to use on your website.
 
-A great cross-browser solution, supporting all modern browser versions of: Google Chrome, Mozilla Firefox, Opera, Safari, IE 8+
+A great cross-browser solution, supporting: Google Chrome 14+, Mozilla Firefox 6.0+, Opera 11.6+, Safari 5+, IE 9+
 
 Licensed under [The MIT License](http://opensource.org/licenses/MIT).
 
