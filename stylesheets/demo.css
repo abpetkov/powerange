@@ -463,3 +463,155 @@ pre {
 .power-ranger .range-max {
   background: url('../images/heart.png') 0 0 no-repeat;
 }
+
+/**
+ *
+ * Responsive styles.
+ *
+ */
+
+@media (max-width: 980px) {
+
+  .container {
+    width: 95%;
+  }
+
+  .author > a {
+    text-align: right;
+    padding-left: 0;
+    padding-right: 20px;
+  }
+
+  .footer {
+    margin-bottom: 30px;
+  }
+
+  .footer .left {
+    width: 270px;
+  }
+
+  .footer .right {
+    width: 380px;
+  }
+
+}
+
+@media (max-width: 767px) {
+
+  .author > a {
+    padding-right: 10px;
+  }
+
+  .footer {
+    height: auto;
+    padding-bottom: 15px;
+  }
+
+  .footer .left {
+    margin-bottom: 25px;
+    padding-left: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .footer .right {
+    padding-right: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 568px) {
+
+  .header {
+    height: auto;
+  }
+
+  .header > img {
+    display: block;
+    float: none;
+    margin: 15px auto;
+  }
+
+  .slogan {
+    float: none;
+    margin: 0 0 15px;
+    text-align: center;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .header {
+    margin-bottom: 15px;
+  }
+
+  .author > span {
+    display: block;
+    float: none;
+    padding-top: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .author > a {
+    display: block;
+    float: none;
+    margin: 0 0 15px;
+    width: 100%;
+  }
+
+  .author > a:last-child {
+    margin-bottom: 0;
+  }
+
+  .slider-wrapper {
+    width: 200px;
+  }
+
+  .footer .right {
+    padding-top: 0;
+  }
+
+  .footer .right > span {
+    display: block;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .footer .right a {
+    margin-left: 8px;
+  }
+
+}
+
+@media (max-width: 479px) {
+
+  .display-box,
+  .display-box-label {
+    float: left;
+    margin-top: 18px;
+    position: static;
+    right: auto;
+    top: auto;
+  }
+
+  .display-box-label {
+    margin-right: 10px;
+  }
+
+  .slider-wrapper .small-button,
+  .powerranger  {
+    margin-top: 18px;
+    position: static;
+    right: auto;
+    top: auto;
+  }
+
+  .powerranger {
+    margin: 20px auto 0;
+  }
+
+}
