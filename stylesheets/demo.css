@@ -540,9 +540,13 @@ pre {
     text-align: center;
   }
 
+  .author > span {
+
+  }
+
 }
 
-@media (max-width: 480px) {
+@media (max-width: 567px) {
 
   .header {
     margin-bottom: 15px;
@@ -566,6 +570,10 @@ pre {
   .author > a:last-child {
     margin-bottom: 0;
   }
+
+}
+
+@media (max-width: 480px) {
 
   .slider-wrapper {
     width: 200px;
