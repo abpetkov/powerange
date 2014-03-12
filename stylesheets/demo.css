@@ -42,6 +42,15 @@ body {
   background-size: cover;
 }
 
+h1 {
+  background: url('../images/logo.png') 0 0 no-repeat;
+  float: left;
+  height: 50px;
+  margin: 19px 0 0 20px;
+  text-indent: -9999px;
+  width: 273px;
+}
+
 h2 {
   color: #3788ca;
   font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
@@ -113,11 +122,6 @@ a:hover {
 .header {
   margin-top: 20px;
   height: 75px;
-}
-
-.header > img {
-  float: left;
-  margin: 19px 0 0 20px;
 }
 
 .slogan {
@@ -620,6 +624,58 @@ pre {
 
   .powerranger {
     margin: 20px auto 0;
+  }
+
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5) {
+
+  h1 {
+    background-image: url('../images/logo@2x.png');
+    background-size: 273px 50px;
+  }
+
+  .author .twitter {
+    background-image: url('../images/icon_twitter@2x.png');
+    background-size: 85px 69px;
+  }
+
+  .author .github {
+    background-image: url('../images/icon_github@2x.png');
+    background-size: 85px 85px;
+  }
+
+  .author .dribbble {
+    background-image: url('../images/icon_dribbble@2x.png');
+    background-size: 85px 85px;
+  }
+
+  .powerranger {
+    background-image: url('../images/power_ranger_gold@2x.png');
+    background-size: 41px 50px;
+  }
+
+  .footer .right a {
+    background-image: url('../images/icons_social@2x.png');
+    background-size: 24px 60px;
+  }
+
+  .power-ranger .range-handle {
+    background-image: url('../images/power_ranger@2x.png');
+    background-size: 25px 30px;
+  }
+
+  .power-ranger .range-min {
+    background-image: url('../images/heart_broken@2x.png');
+    background-size: 24px 24px;
+  }
+
+  .power-ranger .range-max {
+    background-image: url('../images/heart@2x.png');
+    background-size: 24px 24px;
   }
 
 }
