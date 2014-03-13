@@ -3,11 +3,3 @@ build/
 components/
 bower_components/
 node_modules/
-lib/
-example/
-bower.json
-component.json
-package.json
-History.md
-Readme.md
-Gruntfile.js
