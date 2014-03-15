@@ -1644,6 +1644,7 @@ Horizontal.prototype.onmousedown = function(e) {
  */
 
 Horizontal.prototype.onmousemove = function(e) {
+  e.preventDefault();
   if (e.touches) e = e.touches[0];
 
   var leftOffset = this.handleOffsetX + e.clientX - this.startX
@@ -1765,6 +1766,7 @@ Vertical.prototype.onmousedown = function(e) {
  */
 
 Vertical.prototype.onmousemove = function(e) {
+  e.preventDefault();
   if (e.touches) e = e.touches[0];
 
   var bottomOffset = this.handleOffsetY + this.startY - e.clientY
