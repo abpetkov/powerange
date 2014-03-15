@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Powerange - iOS 7 style range slider</title>
   <link rel="stylesheet" href="http://abpetkov.github.io/powerange/stylesheets/demo.css" />
   <link rel="stylesheet" href="../dist/powerange.css" />
@@ -389,8 +392,9 @@
 
   </div>
 
-  <script src="../dist/powerange.min.js"></script>
+  <script src="../build/build.js"></script>
   <script type="text/javascript">
+    var Powerange = require('powerange');
 
     // Basic customization.
     var cust = document.querySelector('.js-customized');

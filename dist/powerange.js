@@ -200,6 +200,360 @@ require.relative = function(parent) {
 
   return localRequire;
 };
+require.register("component-event/index.js", function(exports, require, module){
+var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
+    unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
+    prefix = bind !== 'addEventListener' ? 'on' : '';
+
+/**
+ * Bind `el` event `type` to `fn`.
+ *
+ * @param {Element} el
+ * @param {String} type
+ * @param {Function} fn
+ * @param {Boolean} capture
+ * @return {Function}
+ * @api public
+ */
+
+exports.bind = function(el, type, fn, capture){
+  el[bind](prefix + type, fn, capture || false);
+  return fn;
+};
+
+/**
+ * Unbind `el` event `type`'s callback `fn`.
+ *
+ * @param {Element} el
+ * @param {String} type
+ * @param {Function} fn
+ * @param {Boolean} capture
+ * @return {Function}
+ * @api public
+ */
+
+exports.unbind = function(el, type, fn, capture){
+  el[unbind](prefix + type, fn, capture || false);
+  return fn;
+};
+});
+require.register("component-query/index.js", function(exports, require, module){
+function one(selector, el) {
+  return el.querySelector(selector);
+}
+
+exports = module.exports = function(selector, el){
+  el = el || document;
+  return one(selector, el);
+};
+
+exports.all = function(selector, el){
+  el = el || document;
+  return el.querySelectorAll(selector);
+};
+
+exports.engine = function(obj){
+  if (!obj.one) throw new Error('.one callback required');
+  if (!obj.all) throw new Error('.all callback required');
+  one = obj.one;
+  exports.all = obj.all;
+  return exports;
+};
+
+});
+require.register("component-matches-selector/index.js", function(exports, require, module){
+/**
+ * Module dependencies.
+ */
+
+var query = require('query');
+
+/**
+ * Element prototype.
+ */
+
+var proto = Element.prototype;
+
+/**
+ * Vendor function.
+ */
+
+var vendor = proto.matches
+  || proto.webkitMatchesSelector
+  || proto.mozMatchesSelector
+  || proto.msMatchesSelector
+  || proto.oMatchesSelector;
+
+/**
+ * Expose `match()`.
+ */
+
+module.exports = match;
+
+/**
+ * Match `el` to `selector`.
+ *
+ * @param {Element} el
+ * @param {String} selector
+ * @return {Boolean}
+ * @api public
+ */
+
+function match(el, selector) {
+  if (vendor) return vendor.call(el, selector);
+  var nodes = query.all(selector, el.parentNode);
+  for (var i = 0; i < nodes.length; ++i) {
+    if (nodes[i] == el) return true;
+  }
+  return false;
+}
+
+});
+require.register("discore-closest/index.js", function(exports, require, module){
+var matches = require('matches-selector')
+
+module.exports = function (element, selector, checkYoSelf, root) {
+  element = checkYoSelf ? {parentNode: element} : element
+
+  root = root || document
+
+  // Make sure `element !== document` and `element != null`
+  // otherwise we get an illegal invocation
+  while ((element = element.parentNode) && element !== document) {
+    if (matches(element, selector))
+      return element
+    // After `matches` on the edge case that
+    // the selector matches the root
+    // (when the root is not the document)
+    if (element === root)
+      return  
+  }
+}
+});
+require.register("component-delegate/index.js", function(exports, require, module){
+/**
+ * Module dependencies.
+ */
+
+var closest = require('closest')
+  , event = require('event');
+
+/**
+ * Delegate event `type` to `selector`
+ * and invoke `fn(e)`. A callback function
+ * is returned which may be passed to `.unbind()`.
+ *
+ * @param {Element} el
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} fn
+ * @param {Boolean} capture
+ * @return {Function}
+ * @api public
+ */
+
+exports.bind = function(el, selector, type, fn, capture){
+  return event.bind(el, type, function(e){
+    var target = e.target || e.srcElement;
+    e.delegateTarget = closest(target, selector, true, el);
+    if (e.delegateTarget) fn.call(el, e);
+  }, capture);
+};
+
+/**
+ * Unbind event `type`'s callback `fn`.
+ *
+ * @param {Element} el
+ * @param {String} type
+ * @param {Function} fn
+ * @param {Boolean} capture
+ * @api public
+ */
+
+exports.unbind = function(el, type, fn, capture){
+  event.unbind(el, type, fn, capture);
+};
+
+});
+require.register("component-events/index.js", function(exports, require, module){
+
+/**
+ * Module dependencies.
+ */
+
+var events = require('event');
+var delegate = require('delegate');
+
+/**
+ * Expose `Events`.
+ */
+
+module.exports = Events;
+
+/**
+ * Initialize an `Events` with the given
+ * `el` object which events will be bound to,
+ * and the `obj` which will receive method calls.
+ *
+ * @param {Object} el
+ * @param {Object} obj
+ * @api public
+ */
+
+function Events(el, obj) {
+  if (!(this instanceof Events)) return new Events(el, obj);
+  if (!el) throw new Error('element required');
+  if (!obj) throw new Error('object required');
+  this.el = el;
+  this.obj = obj;
+  this._events = {};
+}
+
+/**
+ * Subscription helper.
+ */
+
+Events.prototype.sub = function(event, method, cb){
+  this._events[event] = this._events[event] || {};
+  this._events[event][method] = cb;
+};
+
+/**
+ * Bind to `event` with optional `method` name.
+ * When `method` is undefined it becomes `event`
+ * with the "on" prefix.
+ *
+ * Examples:
+ *
+ *  Direct event handling:
+ *
+ *    events.bind('click') // implies "onclick"
+ *    events.bind('click', 'remove')
+ *    events.bind('click', 'sort', 'asc')
+ *
+ *  Delegated event handling:
+ *
+ *    events.bind('click li > a')
+ *    events.bind('click li > a', 'remove')
+ *    events.bind('click a.sort-ascending', 'sort', 'asc')
+ *    events.bind('click a.sort-descending', 'sort', 'desc')
+ *
+ * @param {String} event
+ * @param {String|function} [method]
+ * @return {Function} callback
+ * @api public
+ */
+
+Events.prototype.bind = function(event, method){
+  var e = parse(event);
+  var el = this.el;
+  var obj = this.obj;
+  var name = e.name;
+  var method = method || 'on' + name;
+  var args = [].slice.call(arguments, 2);
+
+  // callback
+  function cb(){
+    var a = [].slice.call(arguments).concat(args);
+    obj[method].apply(obj, a);
+  }
+
+  // bind
+  if (e.selector) {
+    cb = delegate.bind(el, e.selector, name, cb);
+  } else {
+    events.bind(el, name, cb);
+  }
+
+  // subscription for unbinding
+  this.sub(name, method, cb);
+
+  return cb;
+};
+
+/**
+ * Unbind a single binding, all bindings for `event`,
+ * or all bindings within the manager.
+ *
+ * Examples:
+ *
+ *  Unbind direct handlers:
+ *
+ *     events.unbind('click', 'remove')
+ *     events.unbind('click')
+ *     events.unbind()
+ *
+ * Unbind delegate handlers:
+ *
+ *     events.unbind('click', 'remove')
+ *     events.unbind('click')
+ *     events.unbind()
+ *
+ * @param {String|Function} [event]
+ * @param {String|Function} [method]
+ * @api public
+ */
+
+Events.prototype.unbind = function(event, method){
+  if (0 == arguments.length) return this.unbindAll();
+  if (1 == arguments.length) return this.unbindAllOf(event);
+
+  // no bindings for this event
+  var bindings = this._events[event];
+  if (!bindings) return;
+
+  // no bindings for this method
+  var cb = bindings[method];
+  if (!cb) return;
+
+  events.unbind(this.el, event, cb);
+};
+
+/**
+ * Unbind all events.
+ *
+ * @api private
+ */
+
+Events.prototype.unbindAll = function(){
+  for (var event in this._events) {
+    this.unbindAllOf(event);
+  }
+};
+
+/**
+ * Unbind all events for `event`.
+ *
+ * @param {String} event
+ * @api private
+ */
+
+Events.prototype.unbindAllOf = function(event){
+  var bindings = this._events[event];
+  if (!bindings) return;
+
+  for (var method in bindings) {
+    this.unbind(event, method);
+  }
+};
+
+/**
+ * Parse `event`.
+ *
+ * @param {String} event
+ * @return {Object}
+ * @api private
+ */
+
+function parse(event) {
+  var parts = event.split(/ +/);
+  return {
+    name: parts.shift(),
+    selector: parts.join(' ')
+  }
+}
+
+});
 require.register("component-indexof/index.js", function(exports, require, module){
 module.exports = function(arr, obj){
   if (arr.indexOf) return arr.indexOf(obj);
@@ -563,43 +917,6 @@ Emitter.prototype.hasListeners = function(event){
 };
 
 });
-require.register("component-event/index.js", function(exports, require, module){
-var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
-    unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
-    prefix = bind !== 'addEventListener' ? 'on' : '';
-
-/**
- * Bind `el` event `type` to `fn`.
- *
- * @param {Element} el
- * @param {String} type
- * @param {Function} fn
- * @param {Boolean} capture
- * @return {Function}
- * @api public
- */
-
-exports.bind = function(el, type, fn, capture){
-  el[bind](prefix + type, fn, capture || false);
-  return fn;
-};
-
-/**
- * Unbind `el` event `type`'s callback `fn`.
- *
- * @param {Element} el
- * @param {String} type
- * @param {Function} fn
- * @param {Boolean} capture
- * @return {Function}
- * @api public
- */
-
-exports.unbind = function(el, type, fn, capture){
-  el[unbind](prefix + type, fn, capture || false);
-  return fn;
-};
-});
 require.register("ui-component-mouse/index.js", function(exports, require, module){
 
 /**
@@ -958,6 +1275,7 @@ require.register("powerange/lib/main.js", function(exports, require, module){
  */
 
 var mouse = require('mouse')
+  , events = require('events')
   , classes = require('classes')
   , percentage = require('percentage-calc');
 
@@ -994,6 +1312,10 @@ function Powerange(element, options) {
 
 Powerange.prototype.bindEvents = function () {
   this.handle = this.slider.querySelector('.range-handle');
+  this.touch = events(this.handle, this);
+  this.touch.bind('touchstart', 'onmousedown');
+  this.touch.bind('touchmove', 'onmousemove');
+  this.touch.bind('touchend', 'onmouseup');
   this.mouse = mouse(this.handle, this);
   this.mouse.bind();
 };
@@ -1307,6 +1629,7 @@ Horizontal.prototype.setPosition = function(val) {
  */
 
 Horizontal.prototype.onmousedown = function(e) {
+  if (e.touches) e = e.touches[0];
   this.startX = e.clientX;
   this.handleOffsetX = this.handle.offsetLeft;
   this.restrictHandleX = this.slider.offsetWidth - this.handle.offsetWidth;
@@ -1321,6 +1644,8 @@ Horizontal.prototype.onmousedown = function(e) {
  */
 
 Horizontal.prototype.onmousemove = function(e) {
+  if (e.touches) e = e.touches[0];
+
   var leftOffset = this.handleOffsetX + e.clientX - this.startX
     , position = (this.steps) ? closest.find(leftOffset, this.steps) : leftOffset;
 
@@ -1425,6 +1750,7 @@ Vertical.prototype.setPosition = function(val) {
  */
 
 Vertical.prototype.onmousedown = function(e) {
+  if (e.touches) e = e.touches[0];
   this.startY = e.clientY;
   this.handleOffsetY = this.slider.offsetHeight - this.handle.offsetHeight - this.handle.offsetTop;
   this.restrictHandleY = this.slider.offsetHeight - this.handle.offsetHeight;
@@ -1439,6 +1765,8 @@ Vertical.prototype.onmousedown = function(e) {
  */
 
 Vertical.prototype.onmousemove = function(e) {
+  if (e.touches) e = e.touches[0];
+
   var bottomOffset = this.handleOffsetY + this.startY - e.clientY
     , position = (this.steps) ? closest.find(bottomOffset, this.steps) : bottomOffset;
 
@@ -1475,6 +1803,21 @@ Vertical.prototype.onmouseup = function(e) {
 
 
 
+
+
+
+require.alias("component-events/index.js", "powerange/deps/events/index.js");
+require.alias("component-events/index.js", "events/index.js");
+require.alias("component-event/index.js", "component-events/deps/event/index.js");
+
+require.alias("component-delegate/index.js", "component-events/deps/delegate/index.js");
+require.alias("discore-closest/index.js", "component-delegate/deps/closest/index.js");
+require.alias("discore-closest/index.js", "component-delegate/deps/closest/index.js");
+require.alias("component-matches-selector/index.js", "discore-closest/deps/matches-selector/index.js");
+require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
+
+require.alias("discore-closest/index.js", "discore-closest/index.js");
+require.alias("component-event/index.js", "component-delegate/deps/event/index.js");
 
 require.alias("component-classes/index.js", "powerange/deps/classes/index.js");
 require.alias("component-classes/index.js", "classes/index.js");

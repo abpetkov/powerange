@@ -20,7 +20,8 @@
       "lib/powerange.css"
     ]
   , "dependencies": {
-        "component/classes": "1.2.1"
+        "component/events": "1.0.6"
+      , "component/classes": "1.2.1"
       , "ui-component/mouse": "0.0.1"
       , "abpetkov/percentage-calc": "*"
       , "abpetkov/closest-num": "*"
