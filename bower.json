@@ -2,7 +2,7 @@
     "name": "powerange"
   , "main": "dist/powerange.js"
   , "version": "0.0.1"
-  , "description": "Module to create iOS 7 like range sliders"
+  , "description": "iOS 7 style range slider"
   , "keywords": [
         "range"
       , "slider"

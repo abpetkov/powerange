@@ -1,7 +1,7 @@
 {
     "name": "powerange"
   , "repo": "abpetkov/powerange"
-  , "description": "Module to create iOS 7 like range sliders"
+  , "description": "iOS 7 style range slider"
   , "version": "0.0.1"
   , "keywords": [
         "range"
