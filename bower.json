@@ -19,5 +19,7 @@
       , "components"
       , "node_modules"
       , "bower_components"
+      , "example"
+      , "component.json"
     ]
 }
