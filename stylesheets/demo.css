@@ -99,6 +99,7 @@ a:hover {
   background-color: #fff;
   margin-bottom: 30px;
   min-height: 75px;
+  position: relative;
 
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -184,6 +185,7 @@ a:hover {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   -ms-box-sizing: border-box;
+  box-sizing: border-box;
   -webkit-transition: background-color 0.15s ease-in;
   -moz-transition: background-color 0.15s ease-in;
   -o-transition: background-color 0.15s ease-in;
@@ -247,6 +249,53 @@ a:hover {
 
 .section-list li:last-child {
   margin-bottom: 0;
+}
+
+.button {
+  background-color: #3788ca;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 1.75em;
+  padding: 15px 20px;
+  text-align: center;
+  text-decoration: none;
+
+  -webkit-transition: background-color 0.15s ease-in;
+  -moz-transition: background-color 0.15s ease-in;
+  -o-transition: background-color 0.15s ease-in;
+  -ms-transition: background-color 0.15s ease-in;
+  transition: background-color 0.15s ease-in;
+}
+
+.button:hover {
+  background-color: #4497db;
+  color: #fff;
+  text-decoration: none;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button:active {
+  background-color: #1e6cac;
+}
+
+.star-button {
+  bottom: 1px;
+  position: absolute;
+  right: 1px;
+}
+
+.star-icon {
+  background: url('../images/icon_star.png') 0 0 no-repeat;
+  display: inline-block;
+  height: 32px;
+  margin: -6px 10px 0 0;
+  vertical-align: middle;
+  width: 32px;
 }
 
 .example {
@@ -486,6 +535,14 @@ pre {
     padding-right: 20px;
   }
 
+  .star-button {
+    padding: 15px 10px;
+  }
+
+  .star-icon {
+    margin-right: 0;
+  }
+
   .footer {
     margin-bottom: 30px;
   }
@@ -504,6 +561,16 @@ pre {
 
   .author > a {
     padding-right: 10px;
+  }
+
+  .star-button {
+    margin-top: 10px;
+    padding: 15px 20px;
+    position: static;
+  }
+
+  .star-icon {
+    margin-right: 10px;
   }
 
   .footer {
@@ -628,6 +695,18 @@ pre {
 
 }
 
+@media (max-width: 320px) {
+
+  .star-button {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+}
+
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min--moz-device-pixel-ratio: 1.5),
@@ -651,6 +730,11 @@ only screen and (min-device-pixel-ratio: 1.5) {
   .author .dribbble {
     background-image: url('../images/icon_dribbble@2x.png');
     background-size: 85px 85px;
+  }
+
+  .star-icon {
+    background-image: url('../images/icon_star@2x.png');
+    background-size: 32px 32px;
   }
 
   .powerranger {
