@@ -283,6 +283,12 @@ a:hover {
   background-color: #1e6cac;
 }
 
+.small-button {
+  height: 25px;
+  padding: 0;
+  width: 90px;
+}
+
 .star-button {
   bottom: 1px;
   position: absolute;
@@ -334,19 +340,6 @@ a:hover {
   text-align: center;
   top: -10px;
   width: 50px;
-}
-
-.small-button {
-  background-color: #3788ca;
-  border: 0;
-  color: #fff;
-  cursor: pointer;
-  height: 25px;
-  width: 90px;
-}
-
-.small-button:focus {
-  outline: 0;
 }
 
 .slider-wrapper .small-button {
