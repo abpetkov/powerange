@@ -443,15 +443,9 @@
       , clickButton = document.querySelector('.js-check-click-button')
       , initClickInput = new Powerange(clickInput, { start: 20 });
 
-    if (window.addEventListener) {
-      clickButton.addEventListener('click', function() {
-        alert(clickInput.value);
-      });
-    } else {
-      clickButton.attachEvent('onclick', function() {
-        alert(clickInput.value);
-      });
-    }
+    clickButton.addEventListener('click', function() {
+      alert(clickInput.value);
+    });
 
     // On change.
     var changeInput = document.querySelector('.js-check-change')
