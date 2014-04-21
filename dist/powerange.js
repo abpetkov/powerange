@@ -1464,7 +1464,7 @@ Powerange.prototype.setValue = function (offset, size) {
 
 Powerange.prototype.step = function(sliderSize, handleSize) {
   var dimension = sliderSize - handleSize
-    , part = percentage.from(this.options.step, this.options.max - this.options.min)
+    , part = percentage.from(this.checkStep(this.options.step), this.options.max - this.options.min)
     , interval = percentage.of(part, dimension)
     , steps = [];
 
@@ -1488,6 +1488,20 @@ Powerange.prototype.checkValues = function(start) {
   if (start < this.options.min) this.options.start = this.options.min;
   if (start > this.options.max) this.options.start = this.options.max;
   if (this.options.min >= this.options.max) this.options.min = this.options.max;
+};
+
+/**
+ * Make sure `step` is positive.
+ *
+ * @param {Number} value
+ * @returns {Number} this.options.step
+ * @api private
+ */
+
+Powerange.prototype.checkStep = function(value) {
+  if (value < 0) value = Math.abs(value);
+  this.options.step = value;
+  return this.options.step;
 };
 
 /**
