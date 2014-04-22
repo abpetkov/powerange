@@ -499,8 +499,8 @@ pre {
   border-radius: 0;
   width: 25px;
 
-  -webkitbox-shadow: 0 0 0;
-  box-shadow: 0 0 0;
+  -webkitbox-shadow: none;
+  box-shadow: none;
 }
 
 .power-ranger .range-min {
