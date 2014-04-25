@@ -229,8 +229,8 @@ a:hover {
 .section-list li div {
   background-color: #3788ca;
   color: #fff;
-  font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
   display: inline-block;
+  font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
   margin-right: 5px;
   padding: 1px 8px 4px;
 
@@ -322,8 +322,8 @@ a:hover {
 
 .display-box-label {
   font-size: 0.8em;
-  right: -80px;
   position: absolute;
+  right: -80px;
   top: -8px;
 }
 
