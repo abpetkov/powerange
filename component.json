@@ -2,7 +2,7 @@
     "name": "powerange"
   , "repo": "abpetkov/powerange"
   , "description": "iOS 7 style range slider"
-  , "version": "0.0.1"
+  , "version": "0.0.2"
   , "keywords": [
         "range"
       , "slider"
