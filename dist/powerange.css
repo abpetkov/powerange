@@ -109,3 +109,11 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+/**
+ * Style for handle cursor on disabled slider.
+ */
+
+.range-disabled {
+  cursor: default;
+}
