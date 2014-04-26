@@ -27,4 +27,9 @@
       , "abpetkov/closest-num": "*"
       , "vesln/super": "0.2.3"
     }
+  , "remotes": [
+        "https://raw.githubusercontent.com"
+      , "https://cdn.rawgit.com"
+      , "https://rawgit.com"
+    ]
 }
