@@ -562,6 +562,7 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
+
 });
 require.register("component-classes/index.js", function(exports, require, module){
 /**
@@ -1515,6 +1516,7 @@ Powerange.prototype.disable = function() {
     this.mouse.unbind();
     this.touch.unbind();
     this.slider.style.opacity = this.options.disableOpacity;
+    classes(this.handle).add('range-disabled');
   }
 };
 
