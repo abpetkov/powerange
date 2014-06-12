@@ -562,7 +562,6 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
-
 });
 require.register("component-classes/index.js", function(exports, require, module){
 /**
@@ -1302,7 +1301,7 @@ function Powerange(element, options) {
   this.options = options || {};
   this.slider = this.create('span', 'range-bar');
 
-  if (this.element !== null && this.element.type === 'text') this.init();
+  if (this.element !== null && (this.element.type === 'text' || this.element.type === 'number')) this.init();
 }
 
 /**
@@ -1469,7 +1468,7 @@ Powerange.prototype.step = function(sliderSize, handleSize) {
     , interval = percentage.of(part, dimension)
     , steps = [];
 
-  for (i = 0; i <= dimension; i += interval) {
+  for (i = 0; i <= dimension + 0.0001; i += interval) {
     steps.push(i);
   }
 
@@ -1568,6 +1567,7 @@ Powerange.prototype.init = function() {
   this.setRange(this.options.min, this.options.max);
   this.disable();
 };
+
 });
 require.register("powerange/lib/horizontal.js", function(exports, require, module){
 /**
