@@ -1468,7 +1468,7 @@ Powerange.prototype.step = function(sliderSize, handleSize) {
     , interval = percentage.of(part, dimension)
     , steps = [];
 
-  for (i = 0; i <= dimension; i += interval) {
+  for (i = 0; i <= dimension + 0.0001; i += interval) {
     steps.push(i);
   }
 
