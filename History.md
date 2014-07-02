@@ -1,4 +1,11 @@
 
+0.0.4 / 2014-07-02
+==================
+
+ * allow tapping anywhere on the slider, not just the handle
+ * fix empty strings when the element has no min/max set
+ * use the build files in example, as to not rely on crappy grunt for development
+
 0.0.2 / 2014-04-26
 ==================
 
