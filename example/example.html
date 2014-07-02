@@ -5,7 +5,7 @@
 
   <title>Powerange - iOS 7 style range slider</title>
   <link rel="stylesheet" href="http://abpetkov.github.io/powerange/stylesheets/demo.css" />
-  <link rel="stylesheet" href="../dist/powerange.css" />
+  <link rel="stylesheet" href="../build/build.css" />
   <link href="http://fonts.googleapis.com/css?family=Maven+Pro:400" rel="stylesheet" type="text/css" />
   <link href="http://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet" type="text/css" />
   <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css" />
@@ -391,8 +391,10 @@
 
   </div>
 
-  <script src="../dist/powerange.min.js"></script>
+  <script src="../build/build.js"></script>
   <script type="text/javascript">
+
+    var Powerange = require('powerange');
 
     // Basic customization.
     var cust = document.querySelector('.js-customized');

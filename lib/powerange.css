@@ -9,6 +9,11 @@
  * Horizontal slider style (default).
  */
 
+.range-container {
+  height: 4px;
+  padding: 13px 0px;
+}
+
 .range-bar {
   background-color: #a9acb1;
   border-radius: 15px;
@@ -64,9 +69,14 @@
  * Vertical slider style.
  */
 
-.vertical {
-  height: 100%;
+.vertical.range-container {
   width: 4px;
+  padding: 0px 13px;
+  height: 100%;
+}
+.vertical .range-bar {
+  width: 4px;
+  height: 100%;
 }
 
 .vertical .range-quantity {

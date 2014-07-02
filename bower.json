@@ -1,7 +1,7 @@
 {
     "name": "powerange"
   , "main": "dist/powerange.js"
-  , "version": "0.0.2"
+  , "version": "0.0.4"
   , "description": "iOS 7 style range slider"
   , "keywords": [
         "range"
