@@ -300,6 +300,7 @@ module.exports = match;
  */
 
 function match(el, selector) {
+  if (!el || el.nodeType !== 1) return false;
   if (vendor) return vendor.call(el, selector);
   var nodes = query.all(selector, el.parentNode);
   for (var i = 0; i < nodes.length; ++i) {
@@ -309,7 +310,7 @@ function match(el, selector) {
 }
 
 });
-require.register("discore-closest/index.js", function(exports, require, module){
+require.register("component-closest/index.js", function(exports, require, module){
 var matches = require('matches-selector')
 
 module.exports = function (element, selector, checkYoSelf, root) {
@@ -326,9 +327,10 @@ module.exports = function (element, selector, checkYoSelf, root) {
     // the selector matches the root
     // (when the root is not the document)
     if (element === root)
-      return  
+      return
   }
 }
+
 });
 require.register("component-delegate/index.js", function(exports, require, module){
 /**
@@ -562,7 +564,6 @@ module.exports = function(arr, obj){
   }
   return -1;
 };
-
 });
 require.register("component-classes/index.js", function(exports, require, module){
 /**
@@ -796,7 +797,7 @@ function mixin(obj) {
 Emitter.prototype.on =
 Emitter.prototype.addEventListener = function(event, fn){
   this._callbacks = this._callbacks || {};
-  (this._callbacks[event] = this._callbacks[event] || [])
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
     .push(fn);
   return this;
 };
@@ -812,11 +813,8 @@ Emitter.prototype.addEventListener = function(event, fn){
  */
 
 Emitter.prototype.once = function(event, fn){
-  var self = this;
-  this._callbacks = this._callbacks || {};
-
   function on() {
-    self.off(event, on);
+    this.off(event, on);
     fn.apply(this, arguments);
   }
 
@@ -848,12 +846,12 @@ Emitter.prototype.removeEventListener = function(event, fn){
   }
 
   // specific event
-  var callbacks = this._callbacks[event];
+  var callbacks = this._callbacks['$' + event];
   if (!callbacks) return this;
 
   // remove all handlers
   if (1 == arguments.length) {
-    delete this._callbacks[event];
+    delete this._callbacks['$' + event];
     return this;
   }
 
@@ -880,7 +878,7 @@ Emitter.prototype.removeEventListener = function(event, fn){
 Emitter.prototype.emit = function(event){
   this._callbacks = this._callbacks || {};
   var args = [].slice.call(arguments, 1)
-    , callbacks = this._callbacks[event];
+    , callbacks = this._callbacks['$' + event];
 
   if (callbacks) {
     callbacks = callbacks.slice(0);
@@ -902,7 +900,7 @@ Emitter.prototype.emit = function(event){
 
 Emitter.prototype.listeners = function(event){
   this._callbacks = this._callbacks || {};
-  return this._callbacks[event] || [];
+  return this._callbacks['$' + event] || [];
 };
 
 /**
@@ -1469,7 +1467,7 @@ Powerange.prototype.step = function(sliderSize, handleSize) {
     , interval = percentage.of(part, dimension)
     , steps = [];
 
-  for (i = 0; i <= dimension; i += interval) {
+  for (i = 0; i < dimension + 1; i += interval) {
     steps.push(i);
   }
 
@@ -1568,6 +1566,7 @@ Powerange.prototype.init = function() {
   this.setRange(this.options.min, this.options.max);
   this.disable();
 };
+
 });
 require.register("powerange/lib/horizontal.js", function(exports, require, module){
 /**
@@ -1830,12 +1829,12 @@ require.alias("component-events/index.js", "events/index.js");
 require.alias("component-event/index.js", "component-events/deps/event/index.js");
 
 require.alias("component-delegate/index.js", "component-events/deps/delegate/index.js");
-require.alias("discore-closest/index.js", "component-delegate/deps/closest/index.js");
-require.alias("discore-closest/index.js", "component-delegate/deps/closest/index.js");
-require.alias("component-matches-selector/index.js", "discore-closest/deps/matches-selector/index.js");
+require.alias("component-closest/index.js", "component-delegate/deps/closest/index.js");
+require.alias("component-closest/index.js", "component-delegate/deps/closest/index.js");
+require.alias("component-matches-selector/index.js", "component-closest/deps/matches-selector/index.js");
 require.alias("component-query/index.js", "component-matches-selector/deps/query/index.js");
 
-require.alias("discore-closest/index.js", "discore-closest/index.js");
+require.alias("component-closest/index.js", "component-closest/index.js");
 require.alias("component-event/index.js", "component-delegate/deps/event/index.js");
 
 require.alias("component-classes/index.js", "powerange/deps/classes/index.js");
